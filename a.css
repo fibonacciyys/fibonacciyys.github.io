@@ -1,0 +1,16 @@
+* {
+    margin: auto;
+}
+a {
+    font-size: larger;
+    color: #aeff8c;
+}
+.bebigger:hover {
+    font-size: xx-large;
+    color: #ffa7aa;
+}
+
+[href] {
+    font-size: medium;
+    color: #ad69ff;
+}
