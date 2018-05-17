@@ -1,0 +1,14 @@
+#bg {
+    background-image: url("change.jpg");
+    background-repeat: repeat;
+    background-attachment: fixed;
+}
+.yys {
+    font-size: xx-large;
+    color: #ffa7aa;
+    border: 2px solid #baf0ff;
+    width: min-content;
+}
+.music {
+
+}
