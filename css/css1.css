@@ -1,5 +1,5 @@
 #bg {
-    background-image: url("change.jpg");
+    background-image: url("./change.jpg");
     background-repeat: repeat;
     background-attachment: fixed;
 }
