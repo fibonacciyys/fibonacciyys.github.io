@@ -3,12 +3,12 @@
     background-repeat: repeat;
     background-attachment: fixed;
 }
-.yys {
-    font-size: xx-large;
-    color: #ffa7aa;
-    border: 2px solid #baf0ff;
-    width: min-content;
-}
-.music {
 
+#change-part {
+    padding-top: 80px;
+    padding-left: 350px;
+}
+
+.div-img {
+    text-align: center;
 }
