@@ -3,118 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>fibonacciYYs</title>
+    <!--父级div-css-->
     <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <!--子元素css-->
     <link rel="stylesheet" type="text/css" href="./css/css1.css">
-    <script src="./js/interact.js" type="text/javascript"></script>
+    <script src="./js/interact.js"></script>
     <script type="text/javascript">
-        // function AddImgClickEvent()
-        // {
-        //     var objs = document.getElementsByTagName("img");
-        //     for(var i=0;i<objs.length;i++)
-        //     {
-        //         objs[i].onclick=function()
-        //         {
-        //             // window.open(this.src);
-        //             if (this.style.width !== 'auto') {
-        //                 this.style.width='auto';
-        //             }else {this.style.width='30%'}
-        //         }
-        //         objs[i].style.cursor = "pointer";
-        //     }
-        // }
-        function AddDivClickEvent()
-        {
-            var objs = document.getElementsByClassName("small");
-            for(var i=0;i<objs.length;i++)
-            {
-                objs[i].onclick=function()
-                {
-                    // window.open(this.src);
-                    if (this.style.width !== 'fit-content') {
-                        var im=this.getElementsByTagName('img')[0];
-                        im.style.position='static';
-                        this.style.width='fit-content';
-                        this.style.height='auto';
-                    }else {
-                        var im=this.getElementsByTagName('img')[0];
-                        im.style.position='absolute';
-                        this.style.width='500px';
-                        this.style.height='500px';
-                    }
-                }
-                objs[i].style.cursor = "pointer";
-            }
-        }
-        var cpy = function () {
-            cp=document.getElementById('change-part');
-            cp.innerText='';
-
-        }
-        var cnt = function () {
-            cp=document.getElementById('change-part');
-            cp.innerText='';
-        }
-        var cai = function () {
-            cp=document.getElementById('change-part');
-            cp.innerText='';
-            ai_list=['./static/aimer/aimer1.jpg','./static/aimer/aimer2.jpg','./static/aimer/aimer3.jpg']
-            for (var i = 0;i<ai_list.length;i++) {
-                var ai_div = document.createElement('div');
-                var ai_p = document.createElement('img');
-                ai_p.src=ai_list[i];
-                ai_div.appendChild(ai_p);
-                ai_div.classList.add('small');
-                cp.appendChild(ai_div);
-            }
-            AddDivClickEvent();
-        }
-        var cyy = function () {
-            cp=document.getElementById('change-part');
-            cp.innerText='';
-            // var yy1=document.createElement('img');
-            // yy1.src='./static/YYlu.jpg';
-            // yy1.classList.add('small');
-            // cp.appendChild(yy1);
-            // var yy2=document.createElement('img');
-            // yy2.src='./static/YYm.jpg';
-            // yy2.classList.add('small');
-            // cp.appendChild(yy2);
-            yy_list=['./static/yy/YYlu.jpg','./static/yy/YYm.jpg']
-            for (var i=0;i<yy_list.length;i++) {
-                var yy_div = document.createElement('div');
-                var yy_p = document.createElement('img');
-                yy_p.src=yy_list[i];
-                yy_div.appendChild(yy_p);
-                yy_div.classList.add('small');
-                cp.appendChild(yy_div);
-            }
-            AddDivClickEvent();
-        }
-
-        var hello = function () {
-            var is_home=confirm('将回到主界面');
-            if (is_home) {
-                document.getElementById('change-part').innerText = '';
-            }
-        };
     </script>
 </head>
 <body id="bg">
 <div class="box">
     <ul class="f-nav" id='f-nav'>
-        <li onclick="hello()">Home</li>
+        <li onclick="home()">Home</li>
         <li onclick="cpy()">Python</li>
-        <li onclick="cnt()">Note</li>
+        <li onclick="cgm()">Game</li>
         <li onclick="cai()">Aimer</li>
         <li onclick="cyy()">YY</li>
         <div class='sideline'></div>
     </ul>
 </div>
 <div class="yys">
- YYS<br/>
-    <audio controls="controls"  autoplay="autoplay" loop>
-        <source src="static/六等星.mp3" type="audio/mpeg">
-    </audio>
+    <div class="yys-t">YYS</div>
+    <div class="mp3">
+        <audio controls="controls"  autoplay="autoplay" loop>
+            <source src="static/六等星.mp3" type="audio/mpeg">
+        </audio>
+    </div >
+    <div id="change-part2">
+        <div id="yellow-site" class="hm_left_div" onclick="toMonkey()">黄网</div>
+    </div>
 </div>
 <div id="change-part">
 

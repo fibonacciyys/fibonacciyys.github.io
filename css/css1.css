@@ -3,11 +3,11 @@
     background-repeat: repeat;
     background-attachment: fixed;
 }
-
 #change-part {
     padding-top: 80px;
     padding-left: 350px;
 }
+
 .small {
     width: 500px;
     height: 500px;
@@ -19,6 +19,15 @@
     vertical-align: middle;
     text-align: center;
     display: table-cell;
+    z-index: -50;
+    transition-duration: 1s;
+    transition-property: all;
+    transition-delay: 100ms;
+    transition-timing-function: ease-in-out;
+    animation-name: tosmall;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-in-out;
+    /*animation-direction: alternate;*/
 }
 .small>img {
     width:100%;
@@ -30,24 +39,454 @@
     bottom: 0;
     right: 0;
     position: absolute;
-    /*z-index: 50;*/
+    z-index: 50;
     /*transform: translate(-50%,-50%);*/
 }
-/*.small:hover {*/
-    /*width:fit-content;*/
-    /*height: auto;*/
-    /*position: fixed;*/
-/*}*/
-.origin {
-    width: auto;
-    height: auto;
-}
-/*.small {*/
-    /*animation-name: bebig;*/
-    /*animation-fill-mode: forwards;*/
-/*}*/
-@keyframes bebig {
-    to {
-        width: auto;
+@keyframes tosmall {
+    from {
+        width: 900px;
+        height: 900px;
+        opacity: 0.13;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
     }
+    to {
+        width: 500px;
+        height: 500px;
+        opacity: unset;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+}
+.big {
+    width: 800px;
+    height: 800px;
+    overflow: hidden;
+    background-color: #333;
+    margin: 20px;
+    float: left;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    z-index: -50;
+    animation-name: tobig;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-in-out;
+    /*animation-direction: alternate;*/
+}
+.big>img {
+    width:100%;
+    clear: both;
+    display: block;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 50;
+}
+@keyframes tobig {
+    from {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+    to {
+        width: 800px;
+        height: 800px;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+}
+.origin {
+    width: fit-content;
+    height: auto;
+    opacity: unset;
+    overflow: hidden;
+    background-color: #333;
+    margin: 20px;
+    float: left;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    z-index: -50;
+    animation-name: toorigin;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in-out;
+    /*animation-direction: alternate;*/
+}
+.origin>img {
+    width:100%;
+    clear: both;
+    display: block;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: static;
+    z-index: 50;
+}
+@keyframes toorigin {
+    from {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+    to {
+        width: 1300px;
+        height: 1300px;
+        opacity: 0.13;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+}
+
+.yys-t {
+    font-size: 100px;
+    color: #ffa7aa;
+    /*border: 2px solid #baf0ff;*/
+    letter-spacing: 13px;
+    text-shadow: 13px 13px 13px #0b2e13;
+    width: auto;
+    position: fixed;
+    padding: 0;
+    display: table-cell;
+    float: left;
+}
+.mp3  {
+    margin-top: 130px;
+    float: left;
+    position: fixed;
+}
+#change-part2 {
+    margin-top: 170px;
+}
+
+.py_right_made {
+    float: left;
+    margin: 20px;
+    height: auto;
+    opacity: 0;
+    overflow: hidden;
+    text-align: center;
+    animation-delay: 400ms;
+    animation-duration: 1s;
+    animation-name: pulldown;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes pulldown {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 850px;
+        opacity: 1;
+    }
+}
+.py_right_delete {
+    float: left;
+    margin: 20px;
+    height: auto;
+    opacity: 0;
+    overflow: hidden;
+    text-align: center;
+    animation-name: pushup;
+    animation-duration: 1s;
+}
+@keyframes pushup {
+    from {
+        height: 850px;
+        opacity: 1;
+    }
+    to {
+        height: 0;
+        opacity: 0;
+    }
+}
+.high_light{
+    font-size: xx-large;
+    color: black;
+    background-color: #baf0ff;
+    opacity: 0.6;
+    border-radius: 20%;
+}
+.longtext {
+    background-color: #b6dfce;
+    width: 400px;
+    height: 800px;
+    opacity: 0.6;
+}
+.py_left_div {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    color: snow;
+    overflow: hidden;
+    background-color: #a79a9c;
+    opacity: 0.9;
+    border-radius: 20px;
+    animation-duration: 1s;
+    animation-name: button_in;
+}
+@keyframes button_in {
+    from {
+        margin-left: -120px;
+        opacity: 0;
+    }
+    to {
+        margin-left: 10px;
+    }
+}
+.py_select_div {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    color: snow;
+    background-color: #a79a9c;
+    opacity: 0.9;
+    border-radius: 20px;
+    animation-name: shou;
+    animation-duration: 1s;
+}
+@keyframes shou {
+    /*from {*/
+        /*margin: 10px;*/
+        /*margin-left: 500px;*/
+        /*width: 100px;*/
+        /*height: 100px;*/
+        /*color: black;*/
+        /*background-color: #baf0ff;*/
+        /*opacity: 0;*/
+        /*border-radius: 20px;*/
+    /*}*/
+    from {
+        margin: 10px;
+        margin-left: 100px;
+        width: 200px;
+        height: 200px;
+        color: black;
+        background-color: #baf0ff;
+        opacity: 0.3;
+        border-radius: 20px;
+    }
+    to {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+        color: black;
+        background-color: #a79a9c;
+        opacity: 0.9;
+        border-radius: 20px;
+    }
+}
+.py_selected_div {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    color: black;
+    background-color: #a79a9c;
+    opacity: 0.9;
+    border-radius: 20px;
+    animation-name: toright;
+    animation-delay: 100ms;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes toright {
+    from {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+        color: black;
+        background-color: #a79a9c;
+        opacity: 0.9;
+        border-radius: 20px;
+    }
+    to {
+        margin: 10px;
+        margin-left: 100px;
+        width: 200px;
+        height: 200px;
+        color: black;
+        background-color: #baf0ff;
+        opacity: 0.3;
+        border-radius: 20px;
+    }
+    /*to {*/
+        /*margin: 10px;*/
+        /*width: 100px;*/
+        /*height: 100px;*/
+        /*color: black;*/
+        /*background-color: #baf0ff;*/
+        /*opacity: 0.7;*/
+        /*border-radius: 20px;*/
+    /*}*/
+}
+
+.big_b_div {
+    margin-left: 30px;
+    width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 40px;
+    vertical-align: middle;
+    background-color: #a79a9c;
+    color: snow;
+    animation-name: button2in;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+}
+@keyframes button2in {
+    from {
+        margin-left: -170px;
+        opacity: 0.1;
+    }
+    to {
+        margin-left: 30px;
+        opacity: 0.85;
+    }
+}
+.is_big_button {
+    margin-left: 30px;
+    width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #a79a9c;
+    color: snow;
+    animation-name: button_to_small;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+}
+@keyframes button_to_small {
+    from {
+        width: 400px;
+        height: 400px;
+        opacity: 0.1;
+        background-color: #baf0ff;
+        color: black;
+    }
+    to {
+        width: 130px;
+        height: 40px;
+        opacity: unset;
+        background-color: #a79a9c;
+        color: snow;
+    }
+}
+.is_small_button {
+    margin-left: 30px;
+    width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #baf0ff;
+    color: black;
+    animation-name: button_to_big;
+    animation-duration: 1.6s;
+    animation-timing-function: ease-out;
+}
+@keyframes button_to_big {
+    from {
+        background-color: #a79a9c;
+        color: snow;
+        width: 130px;
+        height: 40px;
+    }
+    50% {
+        width: 400px;
+        height: 400px;
+        opacity: 0.1;
+        background-color: #a79a9c;
+        color: snow;
+    }
+    to {
+        width: 130px;
+        height: 40px;
+        background-color: #baf0ff;
+        color: black;
+        opacity: unset;
+    }
+}
+.tiptop {
+    height:100%;
+    display:inline-block;
+    vertical-align:middle;
+}
+#big_b {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.middle_img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.hm_left_div {
+    margin: 10px;
+    animation-duration: 1s;
+    animation-name: button_in;
+}
+#yellow-site {
+    width: 100px;
+    height: 100px;
+    background-color: #fcff5b;
+    border-radius: 10px;
+    font-size: xx-large;
+    line-height: 100px;
+    text-align: center;
+    cursor: pointer;
 }

@@ -3,14 +3,12 @@ body {
 	padding: 0;
 }
 .yys {
-	font-size: 100px;
-	color: #ffa7aa;
 	/*border: 2px solid #baf0ff;*/
-	letter-spacing: 13px;
-	text-shadow: 13px 13px 13px #0b2e13;
 	width: auto;
 	position: fixed;
 	margin-top: 70px;
+	padding: 0;
+	/*float: left;*/
 }
 .box {
 	padding: 0;
@@ -61,6 +59,3 @@ body {
 	text-align: center;
 	cursor: pointer;
 }
-
-
-

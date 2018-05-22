@@ -3,16 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+        function hasClass(element, cls) {
+            return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+        }
+        function cahng() {
+            var butt=document.getElementById('big_b');
 
+            var retang = document.getElementsByClassName('bechange');
+            for (var i=0;i<retang.length;i++) {
+                if (hasClass(retang[i],'small1')) {
+                    retang[i].classList.add('big1');
+                    retang[i].classList.remove('small1');
+                    retang[i].classList.remove('small');
+                    butt.innerText='放大';
+                }else {
+                    retang[i].classList.add('small1');
+                    retang[i].classList.remove('big1');
+                    retang[i].classList.remove('small');
+                    butt.innerText='缩小';
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+        .small {
+            width: 100px;
+            height: 100px;
+            background-color: #80bdff;
+        }
+        .small1 {
+            animation-name: bebig;
+            animation-duration: 1s;
+            animation-timing-function: ease-in-out;
+            animation-delay: 200ms;
+            animation-fill-mode: forwards;
+        }
+        @keyframes bebig {
+            from {
+                width: 100px;
+                height: 100px;
+                background-color: #80bdff;
+            }
+            to {
+                width: 300px;
+                height: 300px;
+                background-color: #cdbfe3;
+            }
+        }
+        .big1 {
+            animation-name: besmall;
+            animation-duration: 1s;
+            animation-timing-function: ease-in-out;
+            animation-delay: 200ms;
+            animation-fill-mode: forwards;
+        }
+        @keyframes besmall {
+            from {
+                width: 300px;
+                height: 300px;
+                background-color: #cdbfe3;
+            }
+            to {
+                width: 100px;
+                height: 100px;
+                background-color: #80bdff;
+            }}
+    </style>
 </head>
 <body>
-<p id="p1">yys</p>
-<script>
-    function te() {
-        // document.getElementById("p1").innerHTML="New text!";
-        $('#p1').html="text"
-    }
-</script>
-<input onclick="te()" value="yy" type="button">
+<button id="big_b" onclick="cahng()">放大</button>
+<div class="bechange small"></div>
 </body>
 </html>
