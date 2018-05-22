@@ -207,7 +207,7 @@
     position: fixed;
 }
 #change-part2 {
-    margin-top: 170px;
+    margin-top: 200px;
 }
 
 .py_right_made {
@@ -222,6 +222,8 @@
     animation-name: pulldown;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+    z-index: -50;
+    position: relative;
 }
 @keyframes pulldown {
     from {
@@ -296,7 +298,7 @@
     opacity: 0.9;
     border-radius: 20px;
     animation-name: shou;
-    animation-duration: 1s;
+    animation-duration: 0.9s;
 }
 @keyframes shou {
     /*from {*/

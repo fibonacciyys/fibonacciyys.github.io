@@ -167,7 +167,7 @@ function AddYYSscriptevent() {
             timee=0;
         }else {
             pushup();
-            timee=600;
+            timee=800;
         }
         setTimeout(function () {
             return yysin(that);
@@ -215,7 +215,7 @@ function AddPIGscriptevent() {
             timee=0;
         }else {
             pushup();
-            timee=600;
+            timee=800;
         }
         setTimeout(function () {
             return pigin(that);
@@ -233,7 +233,7 @@ function toMonkey() {
     var wind_yel = window.open('_blank');
     setTimeout(function () {
         return wind_yel.location='./static/yellow.html';
-    },200);
+    },250);
     // window.open('./static/yellow.html');
 }
 
