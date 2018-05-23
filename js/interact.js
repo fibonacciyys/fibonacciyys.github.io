@@ -112,6 +112,27 @@ function AddDivClickEvent() {
         objs[i].style.cursor = "pointer";
     }
 }
+
+function pushup() {
+    var will_delete = document.getElementsByClassName('py_right_div');
+    for (var i=0;i<will_delete.length;i++) {
+        will_delete[i].classList.add('py_right_delete');
+        will_delete[i].classList.remove('py_right_made');
+    }
+    setTimeout(function () {
+        for (var i=will_delete.length-1;i>=0;i--) {
+            var ppare = will_delete[i].parentElement;
+            ppare.removeChild(will_delete[i]);
+        }
+    },600);
+    var other_div = document.getElementsByClassName('py_left_div');
+    for (var i=0;i<other_div.length;i++) {
+        if (hasClass(other_div[i],'py_selected_div')) {
+            other_div[i].classList.add('py_select_div');
+            other_div[i].classList.remove('py_selected_div');
+        }
+    }
+}
 function yysin(element) {
     var cp = document.getElementById('change-part');
     cp.innerText = '';
@@ -134,26 +155,6 @@ function yysin(element) {
         a_div.classList.add('py_right_div');
         a_div.classList.add('py_right_made');
         cp.appendChild(a_div);
-    }
-}
-function pushup() {
-    var will_delete = document.getElementsByClassName('py_right_div');
-    for (var i=0;i<will_delete.length;i++) {
-        will_delete[i].classList.add('py_right_delete');
-        will_delete[i].classList.remove('py_right_made');
-    }
-    setTimeout(function () {
-        for (var i=will_delete.length-1;i>=0;i--) {
-            var ppare = will_delete[i].parentElement;
-            ppare.removeChild(will_delete[i]);
-        }
-    },600);
-    var other_div = document.getElementsByClassName('py_left_div');
-    for (var i=0;i<other_div.length;i++) {
-        if (hasClass(other_div[i],'py_selected_div')) {
-            other_div[i].classList.add('py_select_div');
-            other_div[i].classList.remove('py_selected_div');
-        }
     }
 }
 function AddYYSscriptevent() {
@@ -222,6 +223,7 @@ function AddPIGscriptevent() {
         },timee);
     }
 }
+
 function AddYelEvent() {
     var yell_div = document.getElementById('yellow-site');
     yell_div.onclick = function () {
@@ -235,6 +237,105 @@ function toMonkey() {
         return wind_yel.location='./static/yellow.html';
     },250);
     // window.open('./static/yellow.html');
+}
+
+function AddGameButtonEvent() {
+    var game_div = document.getElementById('hf_left_div1');
+    var hf_left1 = document.getElementById('hf_left1');
+    var game1_div = document.createElement('div');
+    game1_div.classList.add('game');
+    game1_div.id = 'game1';
+
+    var game2_div = document.createElement('div');
+    game2_div.classList.add('game');
+    game2_div.id = 'game2';
+
+    game_div.onclick = function () {
+        if (hasClass(game_div,'close')) {
+            game1_div.classList.add('game_pull');
+            game1_div.classList.remove('game_push');
+            hf_left1.appendChild(game1_div);
+            Addgame1Event();
+            game2_div.classList.add('game_pull');
+            game2_div.classList.remove('game_push');
+            hf_left1.appendChild(game2_div);
+            Addgame2Event();
+            game_div.classList.add('open');
+            game_div.classList.remove('close');
+        }else {
+            game1_div.classList.add('game_push');
+            game1_div.classList.remove('game_pull');
+            game2_div.classList.add('game_push');
+            game2_div.classList.remove('game_pull');
+            setTimeout(function () {
+                hf_left1.removeChild(game1_div);
+                hf_left1.removeChild(game2_div);
+            },1000);
+            game_div.classList.add('close');
+            game_div.classList.remove('open');
+        }
+    }
+}
+function AddMVButtonEvent() {
+    var mv_div = document.getElementById('hf_left_div2');
+    var hf_left2 = document.getElementById('hf_left2');
+    var mv1_div = document.createElement('div');
+    mv1_div.classList.add('mv');
+    mv1_div.id = 'mv1';
+
+    var mv2_div = document.createElement('div');
+    mv2_div.classList.add('mv');
+    mv2_div.id = 'mv2';
+
+    mv_div.onclick = function () {
+        if (hasClass(mv_div,'close')) {
+            mv1_div.classList.add('game_pull');
+            mv1_div.classList.remove('game_push');
+            hf_left2.appendChild(mv1_div);
+            Addmv1Event();
+            mv2_div.classList.add('game_pull');
+            mv2_div.classList.remove('game_push');
+            hf_left2.appendChild(mv2_div);
+            Addmv2Event();
+            mv_div.classList.add('open');
+            mv_div.classList.remove('close');
+        }else {
+            mv1_div.classList.add('game_push');
+            mv1_div.classList.remove('game_pull');
+            mv2_div.classList.add('game_push');
+            mv2_div.classList.remove('game_pull');
+            setTimeout(function () {
+                hf_left2.removeChild(mv1_div);
+                hf_left2.removeChild(mv2_div);
+            },1000);
+            mv_div.classList.add('close');
+            mv_div.classList.remove('open');
+        }
+    }
+}
+function Addgame1Event() {
+    var game1 = document.getElementById('game1');
+    game1.onclick = function () {
+        alert('come soon...');
+    }
+}
+function Addgame2Event() {
+    var game2 = document.getElementById('game2');
+    game2.onclick = function () {
+        alert('come soon...');
+    }
+}
+function Addmv1Event() {
+    var mv1 = document.getElementById('mv1');
+    mv1.onclick = function () {
+        alert('come soon...');
+    }
+}
+function Addmv2Event() {
+    var mv2 = document.getElementById('mv2');
+    mv2.onclick = function () {
+        alert('come soon...');
+    }
 }
 
 function cpy() {
@@ -274,11 +375,35 @@ function cpy() {
     AddPIGscriptevent();
 
 }
-function cgm() {
+function chf() {
     var cp=document.getElementById('change-part');
     cp.innerText='';
     var cp2=document.getElementById('change-part2');
     cp2.innerText='';
+    var game_div = document.createElement('div');
+    var mv_div = document.createElement('div');
+    var left_div1 = document.createElement('div');
+    var left_div2 = document.createElement('div');
+    game_div.classList.add('hf_left_div1');
+
+    game_div.id = 'hf_left_div1';
+    mv_div.classList.add('hf_left_div2');
+
+    mv_div.id = 'hf_left_div2';
+    left_div1.classList.add('hf_left');
+    left_div1.id = 'hf_left1';
+    left_div2.classList.add('hf_left');
+    left_div2.id = 'hf_left2';
+    left_div1.appendChild(game_div);
+    left_div2.appendChild(mv_div);
+    cp2.appendChild(left_div1);
+    cp2.appendChild(left_div2);
+    setTimeout(function () {
+        game_div.classList.add('close');
+        mv_div.classList.add('close');
+    },1300);
+    AddGameButtonEvent();
+    AddMVButtonEvent();
 }
 function cai() {
     var cp=document.getElementById('change-part');

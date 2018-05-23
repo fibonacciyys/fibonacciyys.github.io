@@ -492,3 +492,136 @@
     text-align: center;
     cursor: pointer;
 }
+
+.hf_left {
+    float: left;
+}
+.hf_left_div1 {
+    margin: 10px;
+    margin-left: 35px;
+    width: 100px;
+    height: 100px;
+    color: snow;
+    overflow: hidden;
+    /*float: left;*/
+    cursor: pointer;
+    background-color: #baf0ff;
+    opacity: 0.9;
+    border-radius: 20px;
+    animation-duration: 1s;
+    animation-name: button_in1;
+}
+@keyframes button_in1 {
+    from {
+        margin-left: -120px;
+        opacity: 0.1;
+        background-color: #a79a9c;
+    }
+    to {
+        margin-left: 35px;
+        opacity: 0.9;
+        background-color: #baf0ff;
+    }
+}
+ .hf_left_div2 {
+     margin: 10px;
+     margin-left: 35px;
+     width: 100px;
+     height: 100px;
+     color: snow;
+     overflow: hidden;
+     /*float: left;*/
+     cursor: pointer;
+     background-color: #baf0ff;
+     opacity: 0.9;
+     border-radius: 20px;
+     animation-duration:1.3s;
+     animation-name: button_in2;
+     animation-timing-function: ease-out;
+ }
+ @keyframes button_in2 {
+     from {
+         margin-left: -120px;
+         opacity: 0.1;
+         background-color: #a79a9c;
+     }
+     to {
+         margin-left: 35px;
+         opacity: 0.9;
+         background-color: #baf0ff;
+     }
+ }
+ .game_pull {
+     margin:10px ;
+     margin-left: 35px;
+     cursor: pointer;
+     width: 100px;
+     height: 100px;
+     background-color: #a79a9c;
+     border-radius: 20px;
+     opacity: 0.9;
+     animation-duration: 1s;
+     animation-name: g_pull;
+ }
+ @keyframes g_pull {
+     from {
+         margin-top: -110px;
+         opacity: 0.1;
+     }
+     to {
+         margin-top: 10px;
+         opacity: 0.9;
+     }
+ }
+ .game_push {
+     margin:10px ;
+     margin-left: 35px;
+     cursor: pointer;
+     width: 100px;
+     height: 100px;
+     background-color: #a79a9c;
+     border-radius: 20px;
+     /*margin-top: -110px;*/
+     opacity: 0.9;
+     animation-duration: 1s;
+     animation-name: g_push;
+     animation-fill-mode: forwards;
+ }
+ @keyframes g_push {
+     form {
+         margin-top: 10px;
+         opacity: 0.9;
+     }
+     to {
+         margin-top: -110px;
+         opacity: 0.1;
+     }
+ }
+ .close {
+     background-color: #a79a9c;
+     animation-name: closee;
+     animation-duration: 1s;
+     animation-timing-function: ease-in;
+ }
+ @keyframes closee {
+     from {
+         background-color: #baf0ff;
+     }
+     to {
+         background-color: #a79a9c;
+     }
+ }
+ .open {
+     background-color: #baf0ff;
+     animation-name: openn;
+     animation-duration: 1s;
+     animation-timing-function: ease-in;
+ }
+ @keyframes openn {
+     from {
+         background-color: #a79a9c;
+     }
+     to {
+         background-color: #baf0ff;
+     }
+ }
