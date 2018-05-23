@@ -343,6 +343,8 @@ function cpy() {
     cp.innerText='';
     var cp2=document.getElementById('change-part2');
     cp2.innerText='';
+    var slide = document.getElementsByClassName('sideline')[0];
+    slide.style.marginLeft = '100px';
 
     var yys_script = document.createElement('div');
     var yys_img = document.createElement('img');
@@ -380,6 +382,9 @@ function chf() {
     cp.innerText='';
     var cp2=document.getElementById('change-part2');
     cp2.innerText='';
+    var slide = document.getElementsByClassName('sideline')[0];
+    slide.style.marginLeft = '200px';
+
     var game_div = document.createElement('div');
     var mv_div = document.createElement('div');
     var left_div1 = document.createElement('div');
@@ -410,6 +415,9 @@ function cai() {
     cp.innerText='';
     var cp2=document.getElementById('change-part2');
     cp2.innerText='';
+    var slide = document.getElementsByClassName('sideline')[0];
+    slide.style.marginLeft = '300px';
+
     var ai_list=['./static/aimer/aimer1.jpg','./static/aimer/aimer2.jpg','./static/aimer/aimer3.jpg']
     for (var i = 0;i<ai_list.length;i++) {
         var ai_div = document.createElement('div');
@@ -429,6 +437,9 @@ function cyy() {
     cp.innerText='';
     var cp2=document.getElementById('change-part2');
     cp2.innerText='';
+    var slide = document.getElementsByClassName('sideline')[0];
+    slide.style.marginLeft = '400px';
+
     // var yy1=document.createElement('img');
     // yy1.src='./static/YYlu.jpg';
     // yy1.classList.add('small');
@@ -455,6 +466,8 @@ function home() {
     if (is_home) {
         var cp=document.getElementById('change-part');
         var cp2=document.getElementById('change-part2');
+        var slide = document.getElementsByClassName('sideline')[0];
+        slide.style.marginLeft = '0px';
         // document.getElementById('change-part').innerText = '';
         // document.getElementById('change-part2').innerText = '';
         cp.innerText = '';

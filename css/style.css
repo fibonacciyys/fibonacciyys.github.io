@@ -43,6 +43,7 @@ body {
 	cursor: pointer;
 }
 .sideline {
+	margin-left: 0px;
 	position: absolute;
 	background-color: #a79a9c;
 	left: 0;
@@ -58,4 +59,5 @@ body {
 	color: #fff;
 	text-align: center;
 	cursor: pointer;
+	transition-duration: 1s;
 }
