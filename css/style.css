@@ -12,8 +12,8 @@ body {
 	/*float: left;*/
 }
 #change-part {
-	padding-top: 80px;
-	padding-left: 350px;
+	padding-top: 20px;
+	margin-left: 350px;
 	z-index: 5;
 	position: relative;
 }
@@ -27,6 +27,7 @@ body {
 	padding: 0;
 	margin: 0;
 	background-color: #202932;
+	/*position: fixed;*/
 }
 .f-nav {
 	height: 60px;
