@@ -239,42 +239,92 @@ function toMonkey() {
     // window.open('./static/yellow.html');
 }
 
+function hf_push_div(element,classname) {
+    var will_push = document.getElementsByClassName(classname);
+    for (var i=0;i<will_push.length;i++) {
+        will_push[i].classList.add('game_push');
+        will_push[i].classList.remove('game_pull');
+    }
+    element.classList.add('close');
+    element.classList.remove('open');
+    setTimeout(function () {
+        for (var i=will_push.length-1;i>=0;i--) {
+            var ppare = will_push[i].parentElement;
+            ppare.removeChild(will_push[i]);
+        }
+    },1000);
+}
+function game_div_in(element) {
+    var game_div1 = document.createElement('div');
+    var game_div2 = document.createElement('div');
+    var ppare = element.parentElement;
+    element.classList.add('open');
+    element.classList.remove('close');
+    game_div1.id = 'game1';
+    game_div1.classList.add('game');
+    game_div1.classList.add('game_pull');
+
+    game_div2.id = 'game2';
+    game_div2.classList.add('game');
+    game_div2.classList.add('game_pull');
+
+    ppare.appendChild(game_div1);
+    ppare.appendChild(game_div2);
+    Addgame1Event();
+    Addgame2Event();
+}
 function AddGameButtonEvent() {
     var game_div = document.getElementById('hf_left_div1');
-    var hf_left1 = document.getElementById('hf_left1');
-    var game1_div = document.createElement('div');
-    game1_div.classList.add('game');
-    game1_div.id = 'game1';
-
-    var game2_div = document.createElement('div');
-    game2_div.classList.add('game');
-    game2_div.id = 'game2';
+    // var hf_left1 = document.getElementById('hf_left1');
 
     game_div.onclick = function () {
-        if (hasClass(game_div,'close')) {
-            game1_div.classList.add('game_pull');
-            game1_div.classList.remove('game_push');
-            hf_left1.appendChild(game1_div);
-            Addgame1Event();
-            game2_div.classList.add('game_pull');
-            game2_div.classList.remove('game_push');
-            hf_left1.appendChild(game2_div);
-            Addgame2Event();
-            game_div.classList.add('open');
-            game_div.classList.remove('close');
+        var that = this;
+        if (hasClass(that,'close')) {
+            game_div_in(that);
         }else {
-            game1_div.classList.add('game_push');
-            game1_div.classList.remove('game_pull');
-            game2_div.classList.add('game_push');
-            game2_div.classList.remove('game_pull');
-            setTimeout(function () {
-                hf_left1.removeChild(game1_div);
-                hf_left1.removeChild(game2_div);
-            },1000);
-            game_div.classList.add('close');
-            game_div.classList.remove('open');
+            hf_push_div(that,'game');
         }
     }
+    // game_div.onclick = function () {
+    //     var game1_div = document.createElement('div');
+    //     game1_div.classList.add('game');
+    //     game1_div.id = 'game1';
+    //
+    //     var game2_div = document.createElement('div');
+    //     game2_div.classList.add('game');
+    //     game2_div.id = 'game2';
+    //     var that = this;
+    //     function removecg(element) {
+    //         var game1 = document.getElementById('game1');
+    //         var game2 = document.getElementById('game2');
+    //         var ppare = element.parentElement;
+    //         ppare.removeChild(game1);
+    //         ppare.removeChild(game2);
+    //     }
+    //     if (hasClass(game_div,'close')) {
+    //         game1_div.classList.add('game_pull');
+    //         game1_div.classList.remove('game_push');
+    //         hf_left1.appendChild(game1_div);
+    //         Addgame1Event();
+    //         game2_div.classList.add('game_pull');
+    //         game2_div.classList.remove('game_push');
+    //         hf_left1.appendChild(game2_div);
+    //         Addgame2Event();
+    //         game_div.classList.add('open');
+    //         game_div.classList.remove('close');
+    //         // game_div.classList.remove('hf_left_div1');
+    //     }else {
+    //         game1_div.classList.add('game_push');
+    //         game1_div.classList.remove('game_pull');
+    //         game2_div.classList.add('game_push');
+    //         game2_div.classList.remove('game_pull');
+    //         setTimeout(function () {
+    //             return removecg(that);
+    //         },1000);
+    //         game_div.classList.add('close');
+    //         game_div.classList.remove('open');
+    //     }
+    // }
 }
 function AddMVButtonEvent() {
     var mv_div = document.getElementById('hf_left_div2');
@@ -286,6 +336,11 @@ function AddMVButtonEvent() {
     var mv2_div = document.createElement('div');
     mv2_div.classList.add('mv');
     mv2_div.id = 'mv2';
+
+    function removecm() {
+        hf_left2.removeChild(mv1_div);
+        hf_left2.removeChild(mv2_div);
+    }
 
     mv_div.onclick = function () {
         if (hasClass(mv_div,'close')) {
@@ -299,14 +354,14 @@ function AddMVButtonEvent() {
             Addmv2Event();
             mv_div.classList.add('open');
             mv_div.classList.remove('close');
+            // mv_div.classList.remove('hf_left_div2');
         }else {
             mv1_div.classList.add('game_push');
             mv1_div.classList.remove('game_pull');
             mv2_div.classList.add('game_push');
             mv2_div.classList.remove('game_pull');
             setTimeout(function () {
-                hf_left2.removeChild(mv1_div);
-                hf_left2.removeChild(mv2_div);
+                removecm();
             },1000);
             mv_div.classList.add('close');
             mv_div.classList.remove('open');
@@ -389,12 +444,11 @@ function chf() {
     var mv_div = document.createElement('div');
     var left_div1 = document.createElement('div');
     var left_div2 = document.createElement('div');
-    game_div.classList.add('hf_left_div1');
-
     game_div.id = 'hf_left_div1';
+    game_div.classList.add('hf_left_div1');
+    mv_div.id = 'hf_left_div2';
     mv_div.classList.add('hf_left_div2');
 
-    mv_div.id = 'hf_left_div2';
     left_div1.classList.add('hf_left');
     left_div1.id = 'hf_left1';
     left_div2.classList.add('hf_left');
@@ -404,8 +458,12 @@ function chf() {
     cp2.appendChild(left_div1);
     cp2.appendChild(left_div2);
     setTimeout(function () {
+        var game_div = document.getElementById('hf_left_div1');
         game_div.classList.add('close');
+        // game_div.classList.remove('hf_left_div1');
+        var mv_div = document.getElementById('hf_left_div2');
         mv_div.classList.add('close');
+        // mv_div.classList.remove('hf_left_div2');
     },1300);
     AddGameButtonEvent();
     AddMVButtonEvent();
@@ -462,8 +520,8 @@ function cyy() {
     AddBigButton();
 }
 function home() {
-    var is_home=confirm('将回到主界面');
-    if (is_home) {
+    // var is_home=confirm('将回到主界面');
+    // if (is_home) {
         var cp=document.getElementById('change-part');
         var cp2=document.getElementById('change-part2');
         var slide = document.getElementsByClassName('sideline')[0];
@@ -481,6 +539,6 @@ function home() {
         // var bigbutton = document.getElementById('big_b');
         // var big_b_par = bigbutton.parentElement;
         // big_b_par.removeChild(bigbutton);
-    }
+    // }
 }
 

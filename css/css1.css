@@ -1,17 +1,9 @@
-#bg {
-    background-image: url("./change.jpg");
-    background-repeat: repeat;
-    background-attachment: fixed;
-}
-#change-part {
-    padding-top: 80px;
-    padding-left: 350px;
-}
 
 .small {
     width: 500px;
     height: 500px;
     overflow: hidden;
+    border-radius: 90px;
     background-color: #333;
     margin: 20px;
     float: left;
@@ -19,7 +11,7 @@
     vertical-align: middle;
     text-align: center;
     display: table-cell;
-    z-index: -50;
+    z-index: 5;
     transition-duration: 1s;
     transition-property: all;
     transition-delay: 100ms;
@@ -27,6 +19,13 @@
     animation-name: tosmall;
     animation-duration: 0.8s;
     animation-timing-function: ease-in-out;
+    -webkit-transition-duration: 1s;
+    -webkit-transition-property: all;
+    -webkit-transition-delay: 100ms;
+    -webkit-transition-timing-function: ease-in-out;
+    -webkit-animation-name: tosmall;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-timing-function: ease-in-out;
     /*animation-direction: alternate;*/
 }
 .small>img {
@@ -72,9 +71,40 @@
         z-index: -50;
     }
 }
+@-webkit-keyframes tosmall {
+    from {
+        width: 900px;
+        height: 900px;
+        opacity: 0.13;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+    to {
+        width: 500px;
+        height: 500px;
+        opacity: unset;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+}
 .big {
     width: 800px;
     height: 800px;
+    border-radius: 130px;
     overflow: hidden;
     background-color: #333;
     margin: 20px;
@@ -83,10 +113,13 @@
     vertical-align: middle;
     text-align: center;
     display: table-cell;
-    z-index: -50;
+    z-index: 5;
     animation-name: tobig;
     animation-duration: 0.8s;
     animation-timing-function: ease-in-out;
+    -webkit-animation-name: tobig;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-timing-function: ease-in-out;
     /*animation-direction: alternate;*/
 }
 .big>img {
@@ -102,6 +135,34 @@
     z-index: 50;
 }
 @keyframes tobig {
+    from {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+    to {
+        width: 800px;
+        height: 800px;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+}
+@-webkit-keyframes tobig {
     from {
         width: 500px;
         height: 500px;
@@ -145,6 +206,9 @@
     animation-name: toorigin;
     animation-duration: 0.7s;
     animation-timing-function: ease-in-out;
+    -webkit-animation-name: toorigin;
+    -webkit-animation-duration: 0.7s;
+    -webkit-animation-timing-function: ease-in-out;
     /*animation-direction: alternate;*/
 }
 .origin>img {
@@ -160,6 +224,35 @@
     z-index: 50;
 }
 @keyframes toorigin {
+    from {
+        width: 500px;
+        height: 500px;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+    to {
+        width: 1300px;
+        height: 1300px;
+        opacity: 0.13;
+        overflow: hidden;
+        background-color: #333;
+        margin: 20px;
+        float: left;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        display: table-cell;
+        z-index: -50;
+    }
+}
+@-webkit-keyframes toorigin {
     from {
         width: 500px;
         height: 500px;
@@ -222,10 +315,25 @@
     animation-name: pulldown;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+    -webkit-animation-delay: 400ms;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-name: pulldown;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: forwards;
     z-index: -50;
     position: relative;
 }
 @keyframes pulldown {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 850px;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes pulldown {
     from {
         height: 0;
         opacity: 0;
@@ -244,8 +352,20 @@
     text-align: center;
     animation-name: pushup;
     animation-duration: 1s;
+    -webkit-animation-name: pushup;
+    -webkit-animation-duration: 1s;
 }
 @keyframes pushup {
+    from {
+        height: 850px;
+        opacity: 1;
+    }
+    to {
+        height: 0;
+        opacity: 0;
+    }
+}
+@-webkit-keyframes pushup {
     from {
         height: 850px;
         opacity: 1;
@@ -279,8 +399,19 @@
     border-radius: 20px;
     animation-duration: 1s;
     animation-name: button_in;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-name: button_in;
 }
 @keyframes button_in {
+    from {
+        margin-left: -120px;
+        opacity: 0;
+    }
+    to {
+        margin-left: 10px;
+    }
+}
+@-webkit-keyframes button_in {
     from {
         margin-left: -120px;
         opacity: 0;
@@ -299,6 +430,8 @@
     border-radius: 20px;
     animation-name: shou;
     animation-duration: 0.9s;
+    -webkit-animation-name: shou;
+    -webkit-animation-duration: 0.9s;
 }
 @keyframes shou {
     /*from {*/
@@ -310,6 +443,37 @@
         /*background-color: #baf0ff;*/
         /*opacity: 0;*/
         /*border-radius: 20px;*/
+    /*}*/
+    from {
+        margin: 10px;
+        margin-left: 100px;
+        width: 200px;
+        height: 200px;
+        color: black;
+        background-color: #baf0ff;
+        opacity: 0.3;
+        border-radius: 20px;
+    }
+    to {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+        color: black;
+        background-color: #a79a9c;
+        opacity: 0.9;
+        border-radius: 20px;
+    }
+}
+@-webkit-keyframes shou {
+    /*from {*/
+    /*margin: 10px;*/
+    /*margin-left: 500px;*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*color: black;*/
+    /*background-color: #baf0ff;*/
+    /*opacity: 0;*/
+    /*border-radius: 20px;*/
     /*}*/
     from {
         margin: 10px;
@@ -344,6 +508,11 @@
     animation-duration: 1.3s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+    -webkit-animation-name: toright;
+    -webkit-animation-delay: 100ms;
+    -webkit-animation-duration: 1.3s;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: forwards;
 }
 @keyframes toright {
     from {
@@ -375,6 +544,36 @@
         /*border-radius: 20px;*/
     /*}*/
 }
+@-webkit-keyframes toright {
+    from {
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+        color: black;
+        background-color: #a79a9c;
+        opacity: 0.9;
+        border-radius: 20px;
+    }
+    to {
+        margin: 10px;
+        margin-left: 100px;
+        width: 200px;
+        height: 200px;
+        color: black;
+        background-color: #baf0ff;
+        opacity: 0.3;
+        border-radius: 20px;
+    }
+    /*to {*/
+    /*margin: 10px;*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*color: black;*/
+    /*background-color: #baf0ff;*/
+    /*opacity: 0.7;*/
+    /*border-radius: 20px;*/
+    /*}*/
+}
 
 .big_b_div {
     margin-left: 30px;
@@ -389,8 +588,21 @@
     animation-name: button2in;
     animation-duration: 0.8s;
     animation-timing-function: ease-out;
+    -webkit-animation-name: button2in;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-timing-function: ease-out;
 }
 @keyframes button2in {
+    from {
+        margin-left: -170px;
+        opacity: 0.1;
+    }
+    to {
+        margin-left: 30px;
+        opacity: 0.85;
+    }
+}
+@-webkit-keyframes button2in {
     from {
         margin-left: -170px;
         opacity: 0.1;
@@ -411,8 +623,27 @@
     animation-name: button_to_small;
     animation-duration: 0.8s;
     animation-timing-function: ease-out;
+    -webkit-animation-name: button_to_small;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-timing-function: ease-out;
 }
 @keyframes button_to_small {
+    from {
+        width: 400px;
+        height: 400px;
+        opacity: 0.1;
+        background-color: #baf0ff;
+        color: black;
+    }
+    to {
+        width: 130px;
+        height: 40px;
+        opacity: unset;
+        background-color: #a79a9c;
+        color: snow;
+    }
+}
+@-webkit-keyframes button_to_small {
     from {
         width: 400px;
         height: 400px;
@@ -439,8 +670,33 @@
     animation-name: button_to_big;
     animation-duration: 1.6s;
     animation-timing-function: ease-out;
+    -webkit-animation-name: button_to_big;
+    -webkit-animation-duration: 1.6s;
+    -webkit-animation-timing-function: ease-out;
 }
 @keyframes button_to_big {
+    from {
+        background-color: #a79a9c;
+        color: snow;
+        width: 130px;
+        height: 40px;
+    }
+    50% {
+        width: 400px;
+        height: 400px;
+        opacity: 0.1;
+        background-color: #a79a9c;
+        color: snow;
+    }
+    to {
+        width: 130px;
+        height: 40px;
+        background-color: #baf0ff;
+        color: black;
+        opacity: unset;
+    }
+}
+@-webkit-keyframes button_to_big {
     from {
         background-color: #a79a9c;
         color: snow;
@@ -481,6 +737,8 @@
     margin: 10px;
     animation-duration: 1s;
     animation-name: button_in;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-name: button_in;
 }
 #yellow-site {
     width: 100px;
@@ -510,6 +768,8 @@
     border-radius: 20px;
     animation-duration: 1s;
     animation-name: button_in1;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-name: button_in1;
 }
 @keyframes button_in1 {
     from {
@@ -523,105 +783,187 @@
         background-color: #baf0ff;
     }
 }
- .hf_left_div2 {
-     margin: 10px;
-     margin-left: 35px;
-     width: 100px;
-     height: 100px;
-     color: snow;
-     overflow: hidden;
-     /*float: left;*/
-     cursor: pointer;
-     background-color: #baf0ff;
-     opacity: 0.9;
-     border-radius: 20px;
-     animation-duration:1.3s;
-     animation-name: button_in2;
-     animation-timing-function: ease-out;
+@-webkit-keyframes button_in1 {
+    from {
+        margin-left: -120px;
+        opacity: 0.1;
+        background-color: #a79a9c;
+    }
+    to {
+        margin-left: 35px;
+        opacity: 0.9;
+        background-color: #baf0ff;
+    }
+}
+.hf_left_div2 {
+    margin: 10px;
+    margin-left: 35px;
+    width: 100px;
+    height: 100px;
+    color: snow;
+    overflow: hidden;
+    /*float: left;*/
+    cursor: pointer;
+    background-color: #baf0ff;
+    opacity: 0.9;
+    border-radius: 20px;
+    animation-duration:1.3s;
+    animation-name: button_in2;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration:1.3s;
+    -webkit-animation-name: button_in2;
+    -webkit-animation-timing-function: ease-out;
+}
+@keyframes button_in2 {
+    from {
+        margin-left: -120px;
+        opacity: 0.1;
+        background-color: #a79a9c;
+    }
+    to {
+        margin-left: 35px;
+        opacity: 0.9;
+        background-color: #baf0ff;
+    }
  }
- @keyframes button_in2 {
-     from {
-         margin-left: -120px;
-         opacity: 0.1;
-         background-color: #a79a9c;
-     }
-     to {
-         margin-left: 35px;
-         opacity: 0.9;
-         background-color: #baf0ff;
-     }
- }
- .game_pull {
-     margin:10px ;
-     margin-left: 35px;
-     cursor: pointer;
-     width: 100px;
-     height: 100px;
-     background-color: #a79a9c;
-     border-radius: 20px;
-     opacity: 0.9;
-     animation-duration: 1s;
-     animation-name: g_pull;
- }
- @keyframes g_pull {
-     from {
-         margin-top: -110px;
-         opacity: 0.1;
-     }
-     to {
-         margin-top: 10px;
-         opacity: 0.9;
-     }
- }
- .game_push {
-     margin:10px ;
-     margin-left: 35px;
-     cursor: pointer;
-     width: 100px;
-     height: 100px;
-     background-color: #a79a9c;
-     border-radius: 20px;
-     /*margin-top: -110px;*/
-     opacity: 0.9;
-     animation-duration: 1s;
-     animation-name: g_push;
-     animation-fill-mode: forwards;
- }
- @keyframes g_push {
-     form {
-         margin-top: 10px;
-         opacity: 0.9;
-     }
-     to {
-         margin-top: -110px;
-         opacity: 0.1;
-     }
- }
- .close {
-     background-color: #a79a9c;
-     animation-name: closee;
-     animation-duration: 1s;
-     animation-timing-function: ease-in;
- }
- @keyframes closee {
-     from {
-         background-color: #baf0ff;
-     }
-     to {
-         background-color: #a79a9c;
-     }
- }
- .open {
-     background-color: #baf0ff;
-     animation-name: openn;
-     animation-duration: 1s;
-     animation-timing-function: ease-in;
- }
- @keyframes openn {
-     from {
-         background-color: #a79a9c;
-     }
-     to {
-         background-color: #baf0ff;
-     }
- }
+@-webkit-keyframes button_in2 {
+    from {
+        margin-left: -120px;
+        opacity: 0.1;
+        background-color: #a79a9c;
+    }
+    to {
+        margin-left: 35px;
+        opacity: 0.9;
+        background-color: #baf0ff;
+    }
+}
+.game_pull {
+    margin:10px ;
+    margin-left: 35px;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    background-color: #a79a9c;
+    border-radius: 20px;
+    opacity: 0.9;
+    animation-duration: 1s;
+    animation-name: g_pull;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-name: g_pull;
+}
+@keyframes g_pull {
+    from {
+        margin-top: -110px;
+        opacity: 0.1;
+    }
+    to {
+        margin-top: 10px;
+        opacity: 0.9;
+    }
+}
+@-webkit-keyframes g_pull {
+    from {
+        margin-top: -110px;
+        opacity: 0.1;
+    }
+    to {
+        margin-top: 10px;
+        opacity: 0.9;
+    }
+}
+.game_push {
+    margin:10px ;
+    margin-left: 35px;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    background-color: #a79a9c;
+    border-radius: 20px;
+    /*margin-top: -110px;*/
+    opacity: 0.9;
+    animation-duration: 1s;
+    animation-name: g_push;
+    /*animation-fill-mode: forwards;*/
+    -webkit-animation-duration: 1s;
+    -webkit-animation-name: g_push;
+    /*-webkit-animation-fill-mode: forwards;*/
+}
+@keyframes g_push {
+    from {
+        margin-top: 10px;
+        opacity: 0.9;
+    }
+    to {
+        margin-top: -110px;
+        opacity: 0.1;
+    }
+}
+@-webkit-keyframes g_push {
+    from {
+        margin-top: 10px;
+        opacity: 0.9;
+    }
+    to {
+        margin-top: -110px;
+        opacity: 0.1;
+    }
+}
+.close {
+    /*color: snow;*/
+    /*overflow: hidden;*/
+    /*float: left;*/
+    cursor: pointer;
+    background-color: #a79a9c;
+    animation-name: closee;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    -webkit-animation-name: closee;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-fill-mode: forwards;
+}
+@keyframes closee {
+    from {
+        background-color: #baf0ff;
+    }
+    to {
+        background-color: #a79a9c;
+    }
+}
+@-webkit-keyframes closee {
+    from {
+        background-color: #baf0ff;
+    }
+    to {
+        background-color: #a79a9c;
+    }
+}
+.open {
+    background-color: #baf0ff;
+    animation-name: openn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+    -webkit-animation-name: openn;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-fill-mode: forwards;
+}
+@keyframes openn {
+    from {
+        background-color: #a79a9c;
+    }
+    to {
+        background-color: #baf0ff;
+    }
+}
+@-webkit-keyframes openn {
+    from {
+        background-color: #a79a9c;
+    }
+    to {
+        background-color: #baf0ff;
+    }
+}
