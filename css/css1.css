@@ -291,6 +291,7 @@
     width: auto;
     position: fixed;
     padding: 0;
+    cursor: pointer;
     display: table-cell;
     float: left;
 }
@@ -759,16 +760,19 @@
     margin-left: 35px;
     width: 100px;
     height: 100px;
-    color: snow;
+    color: black;
     overflow: hidden;
     /*float: left;*/
+    line-height: 100px;
+    font-size: 40px;
+    text-align: center;
     cursor: pointer;
     background-color: #baf0ff;
     opacity: 0.9;
     border-radius: 20px;
-    animation-duration: 1s;
+    animation-duration: 0.7s;
     animation-name: button_in1;
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 0.7s;
     -webkit-animation-name: button_in1;
 }
 @keyframes button_in1 {
@@ -800,17 +804,20 @@
     margin-left: 35px;
     width: 100px;
     height: 100px;
-    color: snow;
+    color: black;
     overflow: hidden;
     /*float: left;*/
+    line-height: 100px;
+    font-size: 40px;
+    text-align: center;
     cursor: pointer;
     background-color: #baf0ff;
     opacity: 0.9;
     border-radius: 20px;
-    animation-duration:1.3s;
+    animation-duration:1s;
     animation-name: button_in2;
     animation-timing-function: ease-out;
-    -webkit-animation-duration:1.3s;
+    -webkit-animation-duration:1s;
     -webkit-animation-name: button_in2;
     -webkit-animation-timing-function: ease-out;
 }
@@ -845,11 +852,15 @@
     width: 100px;
     height: 100px;
     background-color: #a79a9c;
+    color: snow;
+    line-height: 100px;
+    text-align: center;
+    font-size: xx-large;
     border-radius: 20px;
     opacity: 0.9;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-name: g_pull;
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 0.5s;
     -webkit-animation-name: g_pull;
 }
 @keyframes g_pull {
@@ -880,12 +891,16 @@
     height: 100px;
     background-color: #a79a9c;
     border-radius: 20px;
+    color: snow;
+    line-height: 100px;
+    text-align: center;
+    font-size: xx-large;
     /*margin-top: -110px;*/
     opacity: 0.9;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-name: g_push;
     /*animation-fill-mode: forwards;*/
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 0.5s;
     -webkit-animation-name: g_push;
     /*-webkit-animation-fill-mode: forwards;*/
 }
@@ -910,60 +925,99 @@
     }
 }
 .close {
-    /*color: snow;*/
+    color: snow;
     /*overflow: hidden;*/
     /*float: left;*/
     cursor: pointer;
     background-color: #a79a9c;
     animation-name: closee;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-timing-function: ease-in;
     animation-fill-mode: forwards;
     -webkit-animation-name: closee;
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 0.5s;
     -webkit-animation-timing-function: ease-in;
     -webkit-animation-fill-mode: forwards;
 }
 @keyframes closee {
     from {
+        color: black;
         background-color: #baf0ff;
     }
     to {
+        color: snow;
         background-color: #a79a9c;
     }
 }
 @-webkit-keyframes closee {
     from {
+        color: black;
         background-color: #baf0ff;
     }
     to {
+        color: snow;
         background-color: #a79a9c;
     }
 }
 .open {
     background-color: #baf0ff;
+    color: black;
     animation-name: openn;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-timing-function: ease-in;
     animation-fill-mode: forwards;
     -webkit-animation-name: openn;
-    -webkit-animation-duration: 1s;
+    -webkit-animation-duration: 0.5s;
     -webkit-animation-timing-function: ease-in;
     -webkit-animation-fill-mode: forwards;
 }
 @keyframes openn {
     from {
+        color: snow;
         background-color: #a79a9c;
     }
     to {
+        color: black;
         background-color: #baf0ff;
     }
 }
 @-webkit-keyframes openn {
     from {
+        color: snow;
         background-color: #a79a9c;
     }
     to {
+        color: black;
         background-color: #baf0ff;
     }
+}
+
+#box{
+    margin:10px 0 0 10px;;
+}
+input{
+    outline: none;
+    font-size:16px;
+}
+p{
+    margin-bottom: 10px;
+    color: snow;
+    font-size: xx-large;
+}
+input[type=date]{
+    height:36px;
+    text-indent:10px;
+}
+input[type=button]{
+    background:#3A92FF;
+    color:white;
+    border: none;
+    height:40px;
+    padding:0 10px;
+    margin-left: -2px;
+}
+#canvas {
+    margin-left: 10px;
+    background-color: #000;
+    display: none;
 }

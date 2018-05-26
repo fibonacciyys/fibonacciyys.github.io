@@ -8,22 +8,49 @@
     <!--子元素css-->
     <link rel="stylesheet" type="text/css" href="./css/css1.css">
     <script src="./js/interact.js"></script>
-    <script type="text/javascript">
+    <script>
+        function a() {
+            var cp = document.createElement('div');
+            var bd = document.getElementById('bg');
+            if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){
+                cp.id = 'change-part';
+                bd.appendChild(cp);
+                // alert('finish');
+            }else {
+                var star_div1 = document.createElement('div');
+                var star_div2 = document.createElement('div');
+                star_div1.style.paddingTop = '60px';
+                star_div2.id = 'particles-js';
+                bd.appendChild(star_div1);
+                bd.appendChild(star_div2);
+                var src_list = ['./js/particles.js','./js/app.js','./js/lib/stats.js']
+                for (var i = 0;i<src_list.length;i++) {
+                    var script_action = document.createElement('script');
+                    script_action.src = src_list[i];
+                    bd.appendChild(script_action);
+                }
+                cp.id = 'change-part';
+                bd.appendChild(cp);
+            }
+        }
+        // document.body.onload = a();
     </script>
+
+
 </head>
-<body id="bg">
+<body id="bg" onload="a()">
 <div class="box">
     <ul class="f-nav" id='f-nav'>
         <li onclick="home()">Home</li>
         <li onclick="cpy()">Python</li>
         <li onclick="chf()">H_Fun</li>
         <li onclick="cai()">Aimer</li>
-        <li onclick="cyy()">YY</li>
+        <li onclick="c51()">伍一</li>
         <div class='sideline'></div>
     </ul>
 </div>
 <div class="yys">
-    <div class="yys-t">YYS</div>
+    <div class="yys-t" onclick="cyy()">YYS</div>
     <div class="mp3">
         <audio controls="controls"  autoplay="autoplay" loop>
             <source src="./static/六等星.mp3" type="audio/mpeg">
@@ -33,45 +60,13 @@
         <div id="yellow-site" class="hm_left_div" onclick="toMonkey()">黄网</div>
     </div>
 </div>
+<!--<div style="padding-top: 60px"></div>-->
+<!--<div id="particles-js"></div>-->
+<!--<script src="./js/particles.js"></script>-->
+<!--<script src="./js/app.js"></script>-->
+<!--<script src="./js/lib/stats.js"></script>-->
+<!--<div id="change-part">-->
 
-<div style="padding-top: 60px"></div>
-
-<!-- count particles -->
-<!--<div class="count-particles">-->
-    <!--<span class="js-count-particles">&#45;&#45;</span> particles-->
 <!--</div>-->
-
-<!-- particles.js container -->
-<div id="particles-js"></div>
-
-<!-- scripts -->
-<script src="./js/particles.js"></script>
-<script src="./js/app.js"></script>
-
-<!-- stats.js -->
-<script src="./js/lib/stats.js"></script>
-<div id="change-part">
-
-</div>
-<!--<script>-->
-    <!--var count_particles, stats, update;-->
-    <!--stats = new Stats;-->
-    <!--stats.setMode(0);-->
-    <!--stats.domElement.style.position = 'absolute';-->
-    <!--stats.domElement.style.left = '0px';-->
-    <!--stats.domElement.style.top = '0px';-->
-    <!--document.body.appendChild(stats.domElement);-->
-    <!--count_particles = document.querySelector('.js-count-particles');-->
-    <!--update = function() {-->
-        <!--stats.begin();-->
-        <!--stats.end();-->
-        <!--if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {-->
-            <!--count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;-->
-        <!--}-->
-        <!--requestAnimationFrame(update);-->
-    <!--};-->
-    <!--requestAnimationFrame(update);-->
-<!--</script>-->
-
 </body>
 </html>

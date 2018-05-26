@@ -164,16 +164,21 @@ function AddYYSscriptevent() {
         var timee;
         // var py_right_item = document.getElementsByClassName('py_right_div')[0];
         var cp=document.getElementById('change-part');
-        if (cp.innerText ==='') {
-            timee=0;
-        }else {
+        if (hasClass(that,'py_selected_div')){
             pushup();
-            timee=800;
+        }else {
+            if (cp.innerText ==='') {
+                timee=0;
+            }else {
+                pushup();
+                timee=800;
+            }
+            setTimeout(function () {
+                return yysin(that);
+            },timee);
+            // yysin(that);
         }
-        setTimeout(function () {
-            return yysin(that);
-        },timee);
-        // yysin(that);
+
     }
 }
 function pigin(element) {
@@ -212,15 +217,20 @@ function AddPIGscriptevent() {
         // var py_right_item = document.getElementsByClassName('py_right_div')[0];
         var timee;
         var cp=document.getElementById('change-part');
-        if (cp.innerText === '') {
-            timee=0;
-        }else {
+        if (hasClass(that,'py_selected_div')) {
             pushup();
-            timee=800;
+        }else {
+            if (cp.innerText === '') {
+                timee=0;
+            }else {
+                pushup();
+                timee=800;
+            }
+            setTimeout(function () {
+                return pigin(that);
+            },timee);
         }
-        setTimeout(function () {
-            return pigin(that);
-        },timee);
+
     }
 }
 
@@ -252,7 +262,7 @@ function hf_push_div(element,classname) {
             var ppare = will_push[i].parentElement;
             ppare.removeChild(will_push[i]);
         }
-    },1000);
+    },500);
 }
 function game_div_in(element) {
     var game_div1 = document.createElement('div');
@@ -261,6 +271,7 @@ function game_div_in(element) {
     element.classList.add('open');
     element.classList.remove('close');
     game_div1.id = 'game1';
+    game_div1.innerText = '星座图';
     game_div1.classList.add('game');
     game_div1.classList.add('game_pull');
 
@@ -332,6 +343,7 @@ function AddMVButtonEvent() {
     var mv1_div = document.createElement('div');
     mv1_div.classList.add('mv');
     mv1_div.id = 'mv1';
+    mv1_div.innerText = 'Aimer';
 
     var mv2_div = document.createElement('div');
     mv2_div.classList.add('mv');
@@ -362,7 +374,7 @@ function AddMVButtonEvent() {
             mv2_div.classList.remove('game_pull');
             setTimeout(function () {
                 removecm();
-            },1000);
+            },500);
             mv_div.classList.add('close');
             mv_div.classList.remove('open');
         }
@@ -371,7 +383,189 @@ function AddMVButtonEvent() {
 function Addgame1Event() {
     var game1 = document.getElementById('game1');
     game1.onclick = function () {
-        alert('come soon...');
+        var cp = document.getElementById('change-part');
+        cp.innerText = '';
+        var box = document.createElement('div');
+        var p_t = document.createElement('p');
+        var canvas = document.createElement('canvas');
+        var input1 = document.createElement('input');
+        var input2 = document.createElement('input');
+        var script = document.createElement('script');
+        p_t.innerText = '请选择或输入你的生日';
+        input1.type = 'date';
+        input1.id = 'birth';
+        input2.type = 'button';
+        input2.id = 'btn';
+        input2.value = '展示星空图';
+
+        canvas.id = 'canvas';
+        canvas.width = '550';
+        canvas.height = '550';
+        box.id = 'box';
+        script.innerHTML = 'var box=document.getElementById(\'box\');\n' +
+            '    var birth=document.getElementById(\'birth\');\n' +
+            '    var btn=document.getElementById(\'btn\');\n' +
+            '    var canvas=document.getElementById("canvas");\n' +
+            '    var ctx=canvas.getContext("2d");\n' +
+            '    var g1,date,timer;\n' +
+            '    ctx.font = "30px Courier New";\n' +
+            '    /*星座位置*/\n' +
+            '    var star={\n' +
+            '        "白羊座":[\n' +
+            '            [[0.30,0.78],[0.34,0.66],[0.28,0.48],[0.60,0.26],[0.65,0.20],[0.71,0.23],[0.70,0.32],[0.72,0.36]],\n' +
+            '            [ [0,1,2,3,4,5],[3,6,7]]\n' +
+            '        ],\n' +
+            '        "天秤座":[\n' +
+            '            [[0.16,0.67],[0.34,0.60],[0.60,0.27],[0.75,0.23],[0.84,0.47],[0.63,0.74],[0.51,0.78]],\n' +
+            '            [[0,1,2,3,4,5,6]]\n' +
+            '        ],\n' +
+            '        "摩羯座":[\n' +
+            '            [[0.78,0.21],[0.78,0.34],[0.75,0.45],[0.75,0.70],[0.69,0.78],[0.31,0.66],[0.22,0.49],[0.30,0.53],[0.53,0.54]],\n' +
+            '            [[0,1,2,3,4,5,6,7,8,1]]\n' +
+            '        ],\n' +
+            '        "水瓶座":[\n' +
+            '            [[0.45,0.21],[0.37,0.35],[0.27,0.51],[0.30,0.58],[0.29,0.64],[0.48,0.79],[0.51,0.71],[0.58,0.68],[0.73,0.74],[0.43,0.53],[0.53,0.47]],\n' +
+            '            [[0,1,2,3,4,5,6,7,8],[2,9,10]]\n' +
+            '        ],\n' +
+            '        "双鱼座":[\n' +
+            '            [[0.28,0.43],[0.28,0.53],[0.36,0.73],[0.43,0.78],[0.50,0.70],[0.53,0.62],[0.57,0.58],[0.63,0.43],[0.67,0.39],[0.74,0.39],[0.77,0.34],[0.72,0.30],[0.75,0.22],[0.23,0.50],[0.66,0.33]],\n' +
+            '            [[0,1,2,3,4,5,6,7,8,9,10,11,12],[0,13,1],[8,14,11]]\n' +
+            '        ],\n' +
+            '        "金牛座":[\n' +
+            '            [[0.29,0.21],[0.39,0.36],[0.50,0.51],[0.50,0.57],[0.61,0.63],[0.77,0.71],[0.79,0.79],[0.22,0.43],[0.39,0.57],[0.60,0.71],[0.67,0.76]],\n' +
+            '            [[0,1,2,3,4,5,6],[7,8,3],[4,9,10]]\n' +
+            '        ],\n' +
+            '        "双子座":[\n' +
+            '            [[0.18,0.37],[0.25,0.45],[0.35,0.55],[0.39,0.68],[0.49,0.77],[0.51,0.63],[0.57,0.78],[0.28,0.29],[0.42,0.32],[0.61,0.49],[0.72,0.60],[0.83,0.59],[0.69,0.75],[0.22,0.54],[0.35,0.43],[0.48,0.21]],\n' +
+            '            [[0,1,2,3,4],[2,5,6],[7,8,9,10,11],[9,12],[13,1,14,8,15]]\n' +
+            '        ],\n' +
+            '        "巨蟹座":[\n' +
+            '            [ [0.16,0.39],[0.27,0.36],[0.52,0.49],[0.57,0.65],[0.83,0.78],[0.44,0.21]],\n' +
+            '            [[0,1,2,3,4],[2,5]]\n' +
+            '        ],\n' +
+            '        "狮子座":[\n' +
+            '            [\n' +
+            '                [0.16,0.75],[0.23,0.67],[0.39,0.77],[0.71,0.53],[0.64,0.39],[0.55,0.37],[0.47,0.27],[0.54,0.24],[0.60,0.27],[0.85,0.56]],\n' +
+            '            [[0,1,2,3,4,5,6,7,8],[3,9]]\n' +
+            '        ],\n' +
+            '        "处女座":[\n' +
+            '            [[0.16,0.59],[0.35,0.63],[0.44,0.70],[0.62,0.51],[0.77,0.46],[0.84,0.37],[0.60,0.42],[0.65,0.26],[0.34,0.75]],\n' +
+            '            [[0,1,2,3,4,5],[3,6,7],[2,8]]\n' +
+            '        ],\n' +
+            '        "天蝎座":[\n' +
+            '            [[0.17,0.50],[0.28,0.63],[0.19,0.70],[0.28,0.78],[0.41,0.77],[0.49,0.72],[0.57,0.55],[0.59,0.44],[0.69,0.31],[0.74,0.21],[0.82,0.29],[0.79,0.44],[0.73,0.50],[0.38,0.47]],\n' +
+            '            [[0,1,2,3,4,5,6,7,8,9,10,11,12],[1,13],[8,11]]\n' +
+            '        ],\n' +
+            '        "射手座":[\n' +
+            '            [[0.22, 0.66],[0.24,0.51],[0.45,0.40],[0.54,0.37],[0.59,0.43],[0.66,0.50],[0.63,0.60],[0.66,0.67],[0.74,0.53],[0.77,0.39],[0.49,0.47],[0.29,0.68],[0.30,0.78],[0.48,0.21],[0.52,0.27],[0.59,0.29]],\n' +
+            '            [[0,1,2,3,4,5,6,7,8,9],[2,10,11,12],[10,4],[13,14,15,3],[14,3]]\n' +
+            '        ]\n' +
+            '    };\n' +
+            '    /*根据出生日期获取星座信息*/\n' +
+            '    function getStarSign(ts){\n' +
+            '        var d=new Date(ts),sign=d.getMonth()*100+d.getDate();\n' +
+            '        switch(true)\n' +
+            '        {\n' +
+            '            case sign<20:\n' +
+            '                return "摩羯座";\n' +
+            '            case sign<119:\n' +
+            '                return "水瓶座";\n' +
+            '            case sign<221:\n' +
+            '                return "双鱼座";\n' +
+            '            case sign<320:\n' +
+            '                return "白羊座";\n' +
+            '            case sign<421:\n' +
+            '                return "金牛座";\n' +
+            '            case sign<522:\n' +
+            '                return "双子座";\n' +
+            '            case sign<623:\n' +
+            '                return "巨蟹座";\n' +
+            '            case sign<723:\n' +
+            '                return "狮子座";\n' +
+            '            case sign<823:\n' +
+            '                return "处女座";\n' +
+            '            case sign<923:\n' +
+            '                return "天秤座";\n' +
+            '            case sign<1022:\n' +
+            '                return "天蝎座";\n' +
+            '            case sign<1122:\n' +
+            '                return "射手座";\n' +
+            '            default:\n' +
+            '                return "摩羯座";\n' +
+            '        }\n' +
+            '    }\n' +
+            '    /*绘制星座*/\n' +
+            '    function constellation(ctx,ary,w,h){\n' +
+            '        /*创建线条*/\n' +
+            '        var points=ary[0], lines=ary[1];\n' +
+            '        ctx.strokeStyle="#FFF";\n' +
+            '        var len=lines.length,i,ii,line,point;\n' +
+            '        ctx.beginPath();\n' +
+            '        while(len--)\n' +
+            '        {\n' +
+            '            i=1;\n' +
+            '            line=lines[len];\n' +
+            '            ii=line.length;\n' +
+            '            point=points[line[0]];\n' +
+            '            ctx.moveTo(point[0]*w,point[1]*h);\n' +
+            '            for(;i<ii;i++){\n' +
+            '                point=points[line[i]];\n' +
+            '                ctx.lineTo(point[0]*w,point[1]*h);\n' +
+            '            }\n' +
+            '        }\n' +
+            '        ctx.stroke();\n' +
+            '        /*创建小圆*/\n' +
+            '        var cur;\n' +
+            '        i=0;\n' +
+            '        ii=points.length;\n' +
+            '        for(;i<ii;i++){\n' +
+            '            cur=points[i];\n' +
+            '            new Circle(cur[0]*w,cur[1]*h).draw();//new出实例\n' +
+            '        }\n' +
+            '    }\n' +
+            '    /*创建小圆的构造函数*/\n' +
+            '    function Circle(x,y,r){\n' +
+            '        this.x=x;\n' +
+            '        this.y=y;\n' +
+            '        this.r=r||Math.round(Math.random()*8+4);\n' +
+            '    }\n' +
+            '    Circle.prototype={\n' +
+            '        draw:function(){\n' +
+            '            ctx.beginPath();\n' +
+            '            g1=ctx.createRadialGradient(this.x,this.y,Math.round(Math.random()*1+1),this.x,this.y,Math.round(Math.random()*3+6));\n' +
+            '            g1.addColorStop(0,\'rgba(255,255,255,.9)\');\n' +
+            '            g1.addColorStop(1,\'rgba(0,0,0,.1)\');\n' +
+            '            ctx.arc(this.x,this.y,this.r,0,Math.PI*2,true);\n' +
+            '            ctx.fillStyle =g1;\n' +
+            '            ctx.closePath();\n' +
+            '            ctx.fill();\n' +
+            '            return this;\n' +
+            '        }};\n' +
+            '    /*点击‘展示我的星空图\'按钮*/\n' +
+            '    btn.onclick=function(e){\n' +
+            '        clearInterval(timer);\n' +
+            '        e.preventDefault();\n' +
+            '        if (!birth.value){\n' +
+            '            alert("请选择您的出生日期");\n' +
+            '        }else{\n' +
+            '            canvas.style.display="block";\n' +
+            '            date = new Date(birth.value.replace(/-/g,\'/\')).getTime();\n' +
+            '            timer=setInterval(function(){\n' +
+            '                ctx.clearRect(0,0,canvas.width,canvas.height);\n' +
+            '                ctx.strokeText(getStarSign(date), 50, 50);\n' +
+            '                constellation(ctx,star[getStarSign(date)],canvas.width,canvas.height);\n' +
+            '            },500);\n' +
+            '        }\n' +
+            '    };';
+        box.appendChild(p_t);
+        box.appendChild(input1);
+        box.appendChild(input2);
+
+        cp.appendChild(box);
+        cp.appendChild(canvas);
+        cp.appendChild(script);
+
+
     }
 }
 function Addgame2Event() {
@@ -383,7 +577,15 @@ function Addgame2Event() {
 function Addmv1Event() {
     var mv1 = document.getElementById('mv1');
     mv1.onclick = function () {
-        alert('come soon...');
+        var cp = document.getElementById('change-part');
+        cp.innerText = '';
+        var video_div = document.createElement('div');
+        var mv = document.createElement('video');
+        mv.src = './static/LAST_STARDUST.mp4'
+        mv.preload = 'auto';
+        mv.controls = 'controls';
+        video_div.appendChild(mv);
+        cp.appendChild(video_div);
     }
 }
 function Addmv2Event() {
@@ -446,8 +648,10 @@ function chf() {
     var left_div2 = document.createElement('div');
     game_div.id = 'hf_left_div1';
     game_div.classList.add('hf_left_div1');
+    game_div.innerText = '互动'
     mv_div.id = 'hf_left_div2';
     mv_div.classList.add('hf_left_div2');
+    mv_div.innerText = 'MV';
 
     left_div1.classList.add('hf_left');
     left_div1.id = 'hf_left1';
@@ -464,7 +668,7 @@ function chf() {
         var mv_div = document.getElementById('hf_left_div2');
         mv_div.classList.add('close');
         // mv_div.classList.remove('hf_left_div2');
-    },1300);
+    },1000);
     AddGameButtonEvent();
     AddMVButtonEvent();
 }
@@ -490,13 +694,35 @@ function cai() {
     //加全图按钮
     AddBigButton();
 }
-function cyy() {
+function c51() {
     var cp=document.getElementById('change-part');
     cp.innerText='';
     var cp2=document.getElementById('change-part2');
     cp2.innerText='';
     var slide = document.getElementsByClassName('sideline')[0];
     slide.style.marginLeft = '400px';
+
+    var fo_list=['./static/51/fiveone1.jpg','./static/51/fiveone2.jpg','./static/51/fiveone3.jpg','./static/51/fiveone4.jpg']
+    for (var i=0;i<fo_list.length;i++) {
+        var fo_div = document.createElement('div');
+        var fo_p = document.createElement('img');
+        fo_p.src=fo_list[i];
+        fo_div.appendChild(fo_p);
+        fo_div.classList.add('small');
+        fo_div.classList.add('bechange');
+        cp.appendChild(fo_div);
+    }
+
+    AddDivClickEvent();
+    AddBigButton();
+}
+function cyy() {
+    var cp=document.getElementById('change-part');
+    cp.innerText='';
+    var cp2=document.getElementById('change-part2');
+    cp2.innerText='';
+    var slide = document.getElementsByClassName('sideline')[0];
+    slide.style.marginLeft = '600px';
 
     // var yy1=document.createElement('img');
     // yy1.src='./static/YYlu.jpg';
@@ -506,7 +732,7 @@ function cyy() {
     // yy2.src='./static/YYm.jpg';
     // yy2.classList.add('small');
     // cp.appendChild(yy2);
-    var yy_list=['./static/yy/YYlu.jpg','./static/yy/YYm.jpg']
+    var yy_list=['./static/yy/YY1.jpg','./static/yy/YY2.jpg']
     for (var i=0;i<yy_list.length;i++) {
         var yy_div = document.createElement('div');
         var yy_p = document.createElement('img');
