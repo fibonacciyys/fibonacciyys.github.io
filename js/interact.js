@@ -392,6 +392,7 @@ function Addgame1Event() {
         var input2 = document.createElement('input');
         var script = document.createElement('script');
         p_t.innerText = '请选择或输入你的生日';
+        p_t.id = 'p_bir';
         input1.type = 'date';
         input1.id = 'birth';
         input2.type = 'button';
