@@ -348,6 +348,7 @@ function AddMVButtonEvent() {
     var mv2_div = document.createElement('div');
     mv2_div.classList.add('mv');
     mv2_div.id = 'mv2';
+    mv2_div.innerText = '春茶';
 
     function removecm() {
         hf_left2.removeChild(mv1_div);
@@ -582,9 +583,12 @@ function Addmv1Event() {
         cp.innerText = '';
         var video_div = document.createElement('div');
         var mv = document.createElement('video');
-        mv.src = './static/LAST_STARDUST.mp4'
+        var sour = document.createElement('source');
+        sour.src = './static/LAST_STARDUST.mp4';
+        sour.type = 'video/mp4';
         mv.preload = 'auto';
         mv.controls = 'controls';
+        mv.appendChild(sour);
         video_div.appendChild(mv);
         cp.appendChild(video_div);
     }
@@ -592,7 +596,8 @@ function Addmv1Event() {
 function Addmv2Event() {
     var mv2 = document.getElementById('mv2');
     mv2.onclick = function () {
-        alert('come soon...');
+        // alert('come soon...');
+        window.open('https://www.bilibili.com/video/av22551705');
     }
 }
 

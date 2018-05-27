@@ -23,14 +23,16 @@
                 star_div2.id = 'particles-js';
                 bd.appendChild(star_div1);
                 bd.appendChild(star_div2);
-                var src_list = ['./js/particles.js','./js/app.js','./js/lib/stats.js']
-                for (var i = 0;i<src_list.length;i++) {
-                    var script_action = document.createElement('script');
-                    script_action.src = src_list[i];
-                    bd.appendChild(script_action);
-                }
-                cp.id = 'change-part';
-                bd.appendChild(cp);
+                setTimeout(function () {
+                    var src_list = ['./js/particles.js','./js/app.js','./js/lib/stats.js']
+                    for (var i = 0;i<src_list.length;i++) {
+                        var script_action = document.createElement('script');
+                        script_action.src = src_list[i];
+                        bd.appendChild(script_action);
+                    }
+                    cp.id = 'change-part';
+                    bd.appendChild(cp);
+                },200);
             }
         }
         // document.body.onload = a();
