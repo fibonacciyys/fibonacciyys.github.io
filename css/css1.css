@@ -295,6 +295,19 @@
     display: table-cell;
     float: left;
 }
+.yys-t:hover {
+    font-size: 100px;
+    color: #ffffff;
+    /*border: 2px solid #baf0ff;*/
+    letter-spacing: 13px;
+    text-shadow: 13px 13px 13px #0b2e13;
+    width: auto;
+    position: fixed;
+    padding: 0;
+    cursor: pointer;
+    display: table-cell;
+    float: left;
+}
 .mp3  {
     margin-top: 130px;
     float: left;
