@@ -451,194 +451,199 @@ function AddMVButtonEvent() {
         }
     }
 }
+// 星座数据
+const starData = {
+    "白羊座": [
+        [[0.30, 0.78], [0.34, 0.66], [0.28, 0.48], [0.60, 0.26], [0.65, 0.20], [0.71, 0.23], [0.70, 0.32], [0.72, 0.36]],
+        [[0, 1, 2, 3, 4, 5], [3, 6, 7]]
+    ],
+    "天秤座": [
+        [[0.16, 0.67], [0.34, 0.60], [0.60, 0.27], [0.75, 0.23], [0.84, 0.47], [0.63, 0.74], [0.51, 0.78]],
+        [[0, 1, 2, 3, 4, 5, 6]]
+    ],
+    "摩羯座": [
+        [[0.78, 0.21], [0.78, 0.34], [0.75, 0.45], [0.75, 0.70], [0.69, 0.78], [0.31, 0.66], [0.22, 0.49], [0.30, 0.53], [0.53, 0.54]],
+        [[0, 1, 2, 3, 4, 5, 6, 7, 8, 1]]
+    ],
+    "水瓶座": [
+        [[0.45, 0.21], [0.37, 0.35], [0.27, 0.51], [0.30, 0.58], [0.29, 0.64], [0.48, 0.79], [0.51, 0.71], [0.58, 0.68], [0.73, 0.74], [0.43, 0.53], [0.53, 0.47]],
+        [[0, 1, 2, 3, 4, 5, 6, 7, 8], [2, 9, 10]]
+    ],
+    "双鱼座": [
+        [[0.28, 0.43], [0.28, 0.53], [0.36, 0.73], [0.43, 0.78], [0.50, 0.70], [0.53, 0.62], [0.57, 0.58], [0.63, 0.43], [0.67, 0.39], [0.74, 0.39], [0.77, 0.34], [0.72, 0.30], [0.75, 0.22], [0.23, 0.50], [0.66, 0.33]],
+        [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [0, 13, 1], [8, 14, 11]]
+    ],
+    "金牛座": [
+        [[0.29, 0.21], [0.39, 0.36], [0.50, 0.51], [0.50, 0.57], [0.61, 0.63], [0.77, 0.71], [0.79, 0.79], [0.22, 0.43], [0.39, 0.57], [0.60, 0.71], [0.67, 0.76]],
+        [[0, 1, 2, 3, 4, 5, 6], [7, 8, 3], [4, 9, 10]]
+    ],
+    "双子座": [
+        [[0.18, 0.37], [0.25, 0.45], [0.35, 0.55], [0.39, 0.68], [0.49, 0.77], [0.51, 0.63], [0.57, 0.78], [0.28, 0.29], [0.42, 0.32], [0.61, 0.49], [0.72, 0.60], [0.83, 0.59], [0.69, 0.75], [0.22, 0.54], [0.35, 0.43], [0.48, 0.21]],
+        [[0, 1, 2, 3, 4], [2, 5, 6], [7, 8, 9, 10, 11], [9, 12], [13, 1, 14, 8, 15]]
+    ],
+    "巨蟹座": [
+        [[0.16, 0.39], [0.27, 0.36], [0.52, 0.49], [0.57, 0.65], [0.83, 0.78], [0.44, 0.21]],
+        [[0, 1, 2, 3, 4], [2, 5]]
+    ],
+    "狮子座": [
+        [[0.16, 0.75], [0.23, 0.67], [0.39, 0.77], [0.71, 0.53], [0.64, 0.39], [0.55, 0.37], [0.47, 0.27], [0.54, 0.24], [0.60, 0.27], [0.85, 0.56]],
+        [[0, 1, 2, 3, 4, 5, 6, 7, 8], [3, 9]]
+    ],
+    "处女座": [
+        [[0.16, 0.59], [0.35, 0.63], [0.44, 0.70], [0.62, 0.51], [0.77, 0.46], [0.84, 0.37], [0.60, 0.42], [0.65, 0.26], [0.34, 0.75]],
+        [[0, 1, 2, 3, 4, 5], [3, 6, 7], [2, 8]]
+    ],
+    "天蝎座": [
+        [[0.17, 0.50], [0.28, 0.63], [0.19, 0.70], [0.28, 0.78], [0.41, 0.77], [0.49, 0.72], [0.57, 0.55], [0.59, 0.44], [0.69, 0.31], [0.74, 0.21], [0.82, 0.29], [0.79, 0.44], [0.73, 0.50], [0.38, 0.47]],
+        [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [1, 13], [8, 11]]
+    ],
+    "射手座": [
+        [[0.22, 0.66], [0.24, 0.51], [0.45, 0.40], [0.54, 0.37], [0.59, 0.43], [0.66, 0.50], [0.63, 0.60], [0.66, 0.67], [0.74, 0.53], [0.77, 0.39], [0.49, 0.47], [0.29, 0.68], [0.30, 0.78], [0.48, 0.21], [0.52, 0.27], [0.59, 0.29]],
+        [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [2, 10, 11, 12], [10, 4], [13, 14, 15, 3], [14, 3]]
+    ]
+};
+
+// 根据出生日期获取星座信息
+function getStarSign(ts) {
+    const d = new Date(ts);
+    const sign = d.getMonth() * 100 + d.getDate();
+    
+    if (sign < 20) return "摩羯座";
+    if (sign < 119) return "水瓶座";
+    if (sign < 221) return "双鱼座";
+    if (sign < 320) return "白羊座";
+    if (sign < 421) return "金牛座";
+    if (sign < 522) return "双子座";
+    if (sign < 623) return "巨蟹座";
+    if (sign < 723) return "狮子座";
+    if (sign < 823) return "处女座";
+    if (sign < 923) return "天秤座";
+    if (sign < 1022) return "天蝎座";
+    if (sign < 1122) return "射手座";
+    return "摩羯座";
+}
+
+// 圆形类
+class Circle {
+    constructor(x, y, r) {
+        this.x = x;
+        this.y = y;
+        this.r = r || Math.round(Math.random() * 8 + 4);
+    }
+    
+    draw(ctx) {
+        ctx.beginPath();
+        const g1 = ctx.createRadialGradient(
+            this.x, this.y, Math.round(Math.random() * 1 + 1),
+            this.x, this.y, Math.round(Math.random() * 3 + 6)
+        );
+        g1.addColorStop(0, 'rgba(255, 255, 255, .9)');
+        g1.addColorStop(1, 'rgba(0, 0, 0, .1)');
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
+        ctx.fillStyle = g1;
+        ctx.closePath();
+        ctx.fill();
+        return this;
+    }
+}
+
+// 绘制星座
+function drawConstellation(ctx, data, width, height) {
+    const [points, lines] = data;
+    
+    // 绘制线条
+    ctx.strokeStyle = "#FFF";
+    ctx.beginPath();
+    
+    for (let i = lines.length - 1; i >= 0; i--) {
+        const line = lines[i];
+        const startPoint = points[line[0]];
+        ctx.moveTo(startPoint[0] * width, startPoint[1] * height);
+        
+        for (let j = 1; j < line.length; j++) {
+            const point = points[line[j]];
+            ctx.lineTo(point[0] * width, point[1] * height);
+        }
+    }
+    
+    ctx.stroke();
+    
+    // 绘制星星
+    for (const point of points) {
+        new Circle(point[0] * width, point[1] * height).draw(ctx);
+    }
+}
+
+// 初始化星座绘制
+function initConstellationDrawing(canvas, birthInput, button) {
+    const ctx = canvas.getContext("2d");
+    ctx.font = "30px Courier New";
+    let timer = null;
+    
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        clearInterval(timer);
+        
+        if (!birthInput.value) {
+            alert("请选择您的出生日期");
+            return;
+        }
+        
+        canvas.style.display = "block";
+        const date = new Date(birthInput.value.replace(/-/g, '/')).getTime();
+        
+        timer = setInterval(function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const starSign = getStarSign(date);
+            ctx.strokeText(starSign, 50, 50);
+            drawConstellation(ctx, starData[starSign], canvas.width, canvas.height);
+        }, 500);
+    });
+}
+
 function Addgame1Event() {
-    var game1 = document.getElementById('game1');
-    game1.onclick = function () {
-        var cp = document.getElementById('change-part');
-        cp.innerText = '';
-        var box = document.createElement('div');
-        var p_t = document.createElement('p');
-        var canvas = document.createElement('canvas');
-        var input1 = document.createElement('input');
-        var input2 = document.createElement('input');
-        var script = document.createElement('script');
-        p_t.innerText = '请选择或输入你的生日';
+    const game1 = document.getElementById('game1');
+    
+    game1.addEventListener('click', function() {
+        const cp = document.getElementById('change-part');
+        cp.innerHTML = '';
+        
+        // 创建DOM元素
+        const box = document.createElement('div');
+        const p_t = document.createElement('p');
+        const canvas = document.createElement('canvas');
+        const input1 = document.createElement('input');
+        const input2 = document.createElement('input');
+        
+        // 设置元素属性
+        p_t.textContent = '请选择或输入你的生日';
         p_t.id = 'p_bir';
+        
         input1.type = 'date';
         input1.id = 'birth';
+        
         input2.type = 'button';
         input2.id = 'btn';
         input2.value = '展示星空图';
-
+        
         canvas.id = 'canvas';
         canvas.width = '550';
         canvas.height = '550';
+        
         box.id = 'box';
-        script.innerHTML = 'var box=document.getElementById(\'box\');\n' +
-            '    var birth=document.getElementById(\'birth\');\n' +
-            '    var btn=document.getElementById(\'btn\');\n' +
-            '    var canvas=document.getElementById("canvas");\n' +
-            '    var ctx=canvas.getContext("2d");\n' +
-            '    var g1,date,timer;\n' +
-            '    ctx.font = "30px Courier New";\n' +
-            '    /*星座位置*/\n' +
-            '    var star={\n' +
-            '        "白羊座":[\n' +
-            '            [[0.30,0.78],[0.34,0.66],[0.28,0.48],[0.60,0.26],[0.65,0.20],[0.71,0.23],[0.70,0.32],[0.72,0.36]],\n' +
-            '            [ [0,1,2,3,4,5],[3,6,7]]\n' +
-            '        ],\n' +
-            '        "天秤座":[\n' +
-            '            [[0.16,0.67],[0.34,0.60],[0.60,0.27],[0.75,0.23],[0.84,0.47],[0.63,0.74],[0.51,0.78]],\n' +
-            '            [[0,1,2,3,4,5,6]]\n' +
-            '        ],\n' +
-            '        "摩羯座":[\n' +
-            '            [[0.78,0.21],[0.78,0.34],[0.75,0.45],[0.75,0.70],[0.69,0.78],[0.31,0.66],[0.22,0.49],[0.30,0.53],[0.53,0.54]],\n' +
-            '            [[0,1,2,3,4,5,6,7,8,1]]\n' +
-            '        ],\n' +
-            '        "水瓶座":[\n' +
-            '            [[0.45,0.21],[0.37,0.35],[0.27,0.51],[0.30,0.58],[0.29,0.64],[0.48,0.79],[0.51,0.71],[0.58,0.68],[0.73,0.74],[0.43,0.53],[0.53,0.47]],\n' +
-            '            [[0,1,2,3,4,5,6,7,8],[2,9,10]]\n' +
-            '        ],\n' +
-            '        "双鱼座":[\n' +
-            '            [[0.28,0.43],[0.28,0.53],[0.36,0.73],[0.43,0.78],[0.50,0.70],[0.53,0.62],[0.57,0.58],[0.63,0.43],[0.67,0.39],[0.74,0.39],[0.77,0.34],[0.72,0.30],[0.75,0.22],[0.23,0.50],[0.66,0.33]],\n' +
-            '            [[0,1,2,3,4,5,6,7,8,9,10,11,12],[0,13,1],[8,14,11]]\n' +
-            '        ],\n' +
-            '        "金牛座":[\n' +
-            '            [[0.29,0.21],[0.39,0.36],[0.50,0.51],[0.50,0.57],[0.61,0.63],[0.77,0.71],[0.79,0.79],[0.22,0.43],[0.39,0.57],[0.60,0.71],[0.67,0.76]],\n' +
-            '            [[0,1,2,3,4,5,6],[7,8,3],[4,9,10]]\n' +
-            '        ],\n' +
-            '        "双子座":[\n' +
-            '            [[0.18,0.37],[0.25,0.45],[0.35,0.55],[0.39,0.68],[0.49,0.77],[0.51,0.63],[0.57,0.78],[0.28,0.29],[0.42,0.32],[0.61,0.49],[0.72,0.60],[0.83,0.59],[0.69,0.75],[0.22,0.54],[0.35,0.43],[0.48,0.21]],\n' +
-            '            [[0,1,2,3,4],[2,5,6],[7,8,9,10,11],[9,12],[13,1,14,8,15]]\n' +
-            '        ],\n' +
-            '        "巨蟹座":[\n' +
-            '            [ [0.16,0.39],[0.27,0.36],[0.52,0.49],[0.57,0.65],[0.83,0.78],[0.44,0.21]],\n' +
-            '            [[0,1,2,3,4],[2,5]]\n' +
-            '        ],\n' +
-            '        "狮子座":[\n' +
-            '            [\n' +
-            '                [0.16,0.75],[0.23,0.67],[0.39,0.77],[0.71,0.53],[0.64,0.39],[0.55,0.37],[0.47,0.27],[0.54,0.24],[0.60,0.27],[0.85,0.56]],\n' +
-            '            [[0,1,2,3,4,5,6,7,8],[3,9]]\n' +
-            '        ],\n' +
-            '        "处女座":[\n' +
-            '            [[0.16,0.59],[0.35,0.63],[0.44,0.70],[0.62,0.51],[0.77,0.46],[0.84,0.37],[0.60,0.42],[0.65,0.26],[0.34,0.75]],\n' +
-            '            [[0,1,2,3,4,5],[3,6,7],[2,8]]\n' +
-            '        ],\n' +
-            '        "天蝎座":[\n' +
-            '            [[0.17,0.50],[0.28,0.63],[0.19,0.70],[0.28,0.78],[0.41,0.77],[0.49,0.72],[0.57,0.55],[0.59,0.44],[0.69,0.31],[0.74,0.21],[0.82,0.29],[0.79,0.44],[0.73,0.50],[0.38,0.47]],\n' +
-            '            [[0,1,2,3,4,5,6,7,8,9,10,11,12],[1,13],[8,11]]\n' +
-            '        ],\n' +
-            '        "射手座":[\n' +
-            '            [[0.22, 0.66],[0.24,0.51],[0.45,0.40],[0.54,0.37],[0.59,0.43],[0.66,0.50],[0.63,0.60],[0.66,0.67],[0.74,0.53],[0.77,0.39],[0.49,0.47],[0.29,0.68],[0.30,0.78],[0.48,0.21],[0.52,0.27],[0.59,0.29]],\n' +
-            '            [[0,1,2,3,4,5,6,7,8,9],[2,10,11,12],[10,4],[13,14,15,3],[14,3]]\n' +
-            '        ]\n' +
-            '    };\n' +
-            '    /*根据出生日期获取星座信息*/\n' +
-            '    function getStarSign(ts){\n' +
-            '        var d=new Date(ts),sign=d.getMonth()*100+d.getDate();\n' +
-            '        switch(true)\n' +
-            '        {\n' +
-            '            case sign<20:\n' +
-            '                return "摩羯座";\n' +
-            '            case sign<119:\n' +
-            '                return "水瓶座";\n' +
-            '            case sign<221:\n' +
-            '                return "双鱼座";\n' +
-            '            case sign<320:\n' +
-            '                return "白羊座";\n' +
-            '            case sign<421:\n' +
-            '                return "金牛座";\n' +
-            '            case sign<522:\n' +
-            '                return "双子座";\n' +
-            '            case sign<623:\n' +
-            '                return "巨蟹座";\n' +
-            '            case sign<723:\n' +
-            '                return "狮子座";\n' +
-            '            case sign<823:\n' +
-            '                return "处女座";\n' +
-            '            case sign<923:\n' +
-            '                return "天秤座";\n' +
-            '            case sign<1022:\n' +
-            '                return "天蝎座";\n' +
-            '            case sign<1122:\n' +
-            '                return "射手座";\n' +
-            '            default:\n' +
-            '                return "摩羯座";\n' +
-            '        }\n' +
-            '    }\n' +
-            '    /*绘制星座*/\n' +
-            '    function constellation(ctx,ary,w,h){\n' +
-            '        /*创建线条*/\n' +
-            '        var points=ary[0], lines=ary[1];\n' +
-            '        ctx.strokeStyle="#FFF";\n' +
-            '        var len=lines.length,i,ii,line,point;\n' +
-            '        ctx.beginPath();\n' +
-            '        while(len--)\n' +
-            '        {\n' +
-            '            i=1;\n' +
-            '            line=lines[len];\n' +
-            '            ii=line.length;\n' +
-            '            point=points[line[0]];\n' +
-            '            ctx.moveTo(point[0]*w,point[1]*h);\n' +
-            '            for(;i<ii;i++){\n' +
-            '                point=points[line[i]];\n' +
-            '                ctx.lineTo(point[0]*w,point[1]*h);\n' +
-            '            }\n' +
-            '        }\n' +
-            '        ctx.stroke();\n' +
-            '        /*创建小圆*/\n' +
-            '        var cur;\n' +
-            '        i=0;\n' +
-            '        ii=points.length;\n' +
-            '        for(;i<ii;i++){\n' +
-            '            cur=points[i];\n' +
-            '            new Circle(cur[0]*w,cur[1]*h).draw();//new出实例\n' +
-            '        }\n' +
-            '    }\n' +
-            '    /*创建小圆的构造函数*/\n' +
-            '    function Circle(x,y,r){\n' +
-            '        this.x=x;\n' +
-            '        this.y=y;\n' +
-            '        this.r=r||Math.round(Math.random()*8+4);\n' +
-            '    }\n' +
-            '    Circle.prototype={\n' +
-            '        draw:function(){\n' +
-            '            ctx.beginPath();\n' +
-            '            g1=ctx.createRadialGradient(this.x,this.y,Math.round(Math.random()*1+1),this.x,this.y,Math.round(Math.random()*3+6));\n' +
-            '            g1.addColorStop(0,\'rgba(255,255,255,.9)\');\n' +
-            '            g1.addColorStop(1,\'rgba(0,0,0,.1)\');\n' +
-            '            ctx.arc(this.x,this.y,this.r,0,Math.PI*2,true);\n' +
-            '            ctx.fillStyle =g1;\n' +
-            '            ctx.closePath();\n' +
-            '            ctx.fill();\n' +
-            '            return this;\n' +
-            '        }};\n' +
-            '    /*点击‘展示我的星空图\'按钮*/\n' +
-            '    btn.onclick=function(e){\n' +
-            '        clearInterval(timer);\n' +
-            '        e.preventDefault();\n' +
-            '        if (!birth.value){\n' +
-            '            alert("请选择您的出生日期");\n' +
-            '        }else{\n' +
-            '            canvas.style.display="block";\n' +
-            '            date = new Date(birth.value.replace(/-/g,\'/\')).getTime();\n' +
-            '            timer=setInterval(function(){\n' +
-            '                ctx.clearRect(0,0,canvas.width,canvas.height);\n' +
-            '                ctx.strokeText(getStarSign(date), 50, 50);\n' +
-            '                constellation(ctx,star[getStarSign(date)],canvas.width,canvas.height);\n' +
-            '            },500);\n' +
-            '        }\n' +
-            '    };';
+        
+        // 组装元素
         box.appendChild(p_t);
         box.appendChild(input1);
         box.appendChild(input2);
-
+        
         cp.appendChild(box);
         cp.appendChild(canvas);
-        cp.appendChild(script);
-
-
-    }
+        
+        // 初始化星座绘制功能
+        initConstellationDrawing(canvas, input1, input2);
+    });
 }
 function Addgame2Event() {
     var game2 = document.getElementById('game2');
@@ -864,4 +869,3 @@ function home() {
         // big_b_par.removeChild(bigbutton);
     // }
 }
-
