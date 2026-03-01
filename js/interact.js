@@ -138,23 +138,58 @@ function yysin(element) {
     cp.innerText = '';
     element.classList.add('py_selected_div');
     element.classList.remove('py_select_div');
-    var py_list = ['./static/py/yys.txt', './static/py/interactt.txt', './static/py/radd.txt'];
+    var py_list = ['./static/py/yys.py', './static/py/interactt.py', './static/py/radd.py'];
     for (var i = 0; i < py_list.length; i++) {
-        var a_text = document.createElement('iframe');
-        var a_div = document.createElement('div');
-        var a_div_title = document.createElement('div');
-        var a_div_iframe = document.createElement('div');
-        var txtt = py_list[i];
-        a_text.src = txtt;
-        a_text.classList.add('longtext')
-        a_div_title.innerText = txtt;
-        a_div_title.classList.add('high_light')
-        a_div_iframe.appendChild(a_text);
-        a_div.appendChild(a_div_title);
-        a_div.appendChild(a_div_iframe);
-        a_div.classList.add('py_right_div');
-        a_div.classList.add('py_right_made');
-        cp.appendChild(a_div);
+        (function() {
+            var a_div = document.createElement('div');
+            var a_div_title = document.createElement('div');
+            var a_div_code = document.createElement('div');
+            var a_pre = document.createElement('pre');
+            var a_code = document.createElement('code');
+            var txtt = py_list[i];
+            a_div_title.innerText = txtt;
+            a_div_title.classList.add('high_light');
+            a_code.classList.add('language-python');
+            // 直接为 pre 元素设置样式，确保滚动功能正常
+            a_pre.style.width = '400px';
+            a_pre.style.height = '800px';
+            a_pre.style.overflowX = 'auto';
+            a_pre.style.overflowY = 'scroll';
+            a_pre.style.backgroundColor = '#f8f8f8';
+            a_pre.style.border = '1px solid #ddd';
+            a_pre.style.borderRadius = '4px';
+            a_pre.style.padding = '10px';
+            a_pre.style.fontFamily = 'Courier New, monospace';
+            a_pre.style.fontSize = '14px';
+            a_pre.style.lineHeight = '1.4';
+            a_pre.style.whiteSpace = 'pre';
+            a_pre.style.boxSizing = 'border-box';
+            a_pre.style.display = 'block';
+            a_pre.appendChild(a_code);
+            a_div_code.appendChild(a_pre);
+            a_div.appendChild(a_div_title);
+            a_div.appendChild(a_div_code);
+            a_div.classList.add('py_right_div');
+            a_div.classList.add('py_right_made');
+            // 为代码容器添加样式，确保不限制滚动
+            a_div_code.style.width = '420px';
+            a_div_code.style.height = '820px';
+            a_div_code.style.overflow = 'visible';
+            a_div_code.style.boxSizing = 'border-box';
+            cp.appendChild(a_div);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', txtt, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    a_code.textContent = xhr.responseText;
+                    if (typeof Prism !== 'undefined') {
+                        Prism.highlightElement(a_code);
+                    }
+                }
+            };
+            xhr.send();
+        })();
     }
 }
 function AddYYSscriptevent() {
@@ -191,23 +226,58 @@ function pigin(element) {
     // }
     element.classList.add('py_selected_div');
     element.classList.remove('py_select_div');
-    var pig_list=['./static/py/pig.txt']
+    var pig_list=['./static/py/pig.py']
     for (var i=0;i<pig_list.length;i++) {
-        var a_text = document.createElement('iframe');
-        var a_div = document.createElement('div');
-        var a_div_title = document.createElement('div');
-        var a_div_iframe = document.createElement('div');
-        var txtt = pig_list[i];
-        a_text.src = txtt;
-        a_text.classList.add('longtext')
-        a_div_title.innerText = txtt;
-        a_div_title.classList.add('high_light')
-        a_div_iframe.appendChild(a_text);
-        a_div.appendChild(a_div_title);
-        a_div.appendChild(a_div_iframe);
-        a_div.classList.add('py_right_div');
-        a_div.classList.add('py_right_made');
-        cp.appendChild(a_div);
+        (function() {
+            var a_div = document.createElement('div');
+            var a_div_title = document.createElement('div');
+            var a_div_code = document.createElement('div');
+            var a_pre = document.createElement('pre');
+            var a_code = document.createElement('code');
+            var txtt = pig_list[i];
+            a_div_title.innerText = txtt;
+            a_div_title.classList.add('high_light');
+            a_code.classList.add('language-python');
+            // 直接为 pre 元素设置样式，确保滚动功能正常
+            a_pre.style.width = '400px';
+            a_pre.style.height = '800px';
+            a_pre.style.overflowX = 'auto';
+            a_pre.style.overflowY = 'scroll';
+            a_pre.style.backgroundColor = '#f8f8f8';
+            a_pre.style.border = '1px solid #ddd';
+            a_pre.style.borderRadius = '4px';
+            a_pre.style.padding = '10px';
+            a_pre.style.fontFamily = 'Courier New, monospace';
+            a_pre.style.fontSize = '14px';
+            a_pre.style.lineHeight = '1.4';
+            a_pre.style.whiteSpace = 'pre';
+            a_pre.style.boxSizing = 'border-box';
+            a_pre.style.display = 'block';
+            a_pre.appendChild(a_code);
+            a_div_code.appendChild(a_pre);
+            a_div.appendChild(a_div_title);
+            a_div.appendChild(a_div_code);
+            a_div.classList.add('py_right_div');
+            a_div.classList.add('py_right_made');
+            // 为代码容器添加样式，确保不限制滚动
+            a_div_code.style.width = '420px';
+            a_div_code.style.height = '820px';
+            a_div_code.style.overflow = 'visible';
+            a_div_code.style.boxSizing = 'border-box';
+            cp.appendChild(a_div);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', txtt, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    a_code.textContent = xhr.responseText;
+                    if (typeof Prism !== 'undefined') {
+                        Prism.highlightElement(a_code);
+                    }
+                }
+            };
+            xhr.send();
+        })();
     }
 }
 function AddPIGscriptevent() {
