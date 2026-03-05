@@ -1,457 +1,562 @@
 'use strict';
 
-//交互
-// function AddImgClickEvent()
-// {
-//     var objs = document.getElementsByTagName("img");
-//     for(var i=0;i<objs.length;i++)
-//     {
-//         objs[i].onclick=function()
-//         {
-//             // window.open(this.src);
-//             if (this.style.width !== 'auto') {
-//                 this.style.width='auto';
-//             }else {this.style.width='30%'}
-//         }
-//         objs[i].style.cursor = "pointer";
-//     }
-// }
-function hasClass(element, cls) {
-    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+// ==================== 配置常量 ====================
+const CONFIG = {
+    CODE_VIEWER: {
+        PRE_WIDTH: '400px',
+        PRE_HEIGHT: '800px',
+        CONTAINER_WIDTH: '420px',
+        CONTAINER_HEIGHT: '820px'
+    },
+    ANIMATION: {
+        REMOVE_DELAY: 600,
+        REMOVE_DELAY_GAME: 500,
+        TRANSITION_DELAY: 800,
+        TOGGLE_DELAY: 250
+    },
+    SIDEBAR_POSITIONS: {
+        HOME: '0px',
+        C_PY: '100px',
+        C_HF: '200px',
+        C_JJY: '400px',
+        C_AI: '300px',
+        C_51: '500px',
+        C_YY: '700px'
+    }
+};
+
+// ==================== 工具函数 ====================
+const hasClass = (element, cls) => {
+    return element.classList.contains(cls);
+};
+
+const qs = (selector) => document.querySelector(selector);
+const qsa = (selector) => document.querySelectorAll(selector);
+
+// ==================== 图片展示相关 ====================
+function toggleImageSize(element) {
+    if (hasClass(element, 'small')) {
+        element.classList.add('big');
+        element.classList.remove('small');
+    } else if (hasClass(element, 'big') || hasClass(element, 'origin')) {
+        element.classList.add('small');
+        element.classList.remove('big', 'origin');
+    }
 }
 
-function AddBigButtonEvent () {
-    var bigb_d = document.getElementsByClassName('big_b_div')[0];
-    var bigb = document.getElementById('big_b');
-    bigb_d.onclick = function () {
-        if (bigb.innerText == '全部查看原图') {
-            var small_div = document.getElementsByClassName('bechange');
-            for (var i = 0; i < small_div.length; i++) {
-                // if (small_div[i].style.width !== 'fit-content') {
-                //     var im = small_div[i].getElementsByTagName('img')[0];
-                //     im.style.position = 'static';
-                //     small_div[i].style.width = 'fit-content';
-                //     small_div[i].style.height = 'auto';
-                // }
-                if (hasClass(small_div[i],'small') || hasClass(small_div[i],'big')) {
-                    small_div[i].classList.add('origin');
-                    small_div[i].classList.remove('small');
-                    small_div[i].classList.remove('big');
-                }
+function toggleAllImages(showOriginal) {
+    const images = qsa('.bechange');
+    images.forEach(img => {
+        if (showOriginal) {
+            if (hasClass(img, 'small') || hasClass(img, 'big')) {
+                img.classList.add('origin');
+                img.classList.remove('small', 'big');
             }
-            this.classList.add('is_small_button');
-            this.classList.remove('is_big_button');
-            bigb.innerText = '全部查看小图';
         } else {
-            var small_div = document.getElementsByClassName('bechange');
-            for (var i = 0; i < small_div.length; i++) {
-                // if (small_div[i].style.width == 'fit-content') {
-                //     var im = small_div[i].getElementsByTagName('img')[0];
-                //     im.style.position = 'absolute';
-                //     small_div[i].style.width = '500px';
-                //     small_div[i].style.height = '500px';
-                // }
-                if (hasClass(small_div[i],'big') || hasClass(small_div[i],'origin')) {
-                    small_div[i].classList.add('small');
-                    small_div[i].classList.remove('big');
-                    small_div[i].classList.remove('origin');
+            if (hasClass(img, 'big') || hasClass(img, 'origin')) {
+                img.classList.add('small');
+                img.classList.remove('big', 'origin');
+            }
+        }
+    });
+}
+
+function addImageClickEvent() {
+    const images = qsa('.bechange');
+    images.forEach(img => {
+        img.addEventListener('click', function() {
+            toggleImageSize(this);
+        });
+        img.style.cursor = 'pointer';
+    });
+}
+
+function addBigButton() {
+    const container = qs('#change-part2');
+    const existingButton = qs('#big_b');
+    
+    if (!existingButton) {
+        const buttonDiv = document.createElement('div');
+        const buttonText = document.createElement('p');
+        const tooltip = document.createElement('span');
+        
+        tooltip.classList.add('tiptop');
+        buttonDiv.classList.add('big_b_div');
+        buttonDiv.style.cursor = 'pointer';
+        buttonText.textContent = '全部查看原图';
+        buttonText.id = 'big_b';
+        
+        buttonDiv.appendChild(buttonText);
+        buttonDiv.appendChild(tooltip);
+        container.appendChild(buttonDiv);
+        
+        addBigButtonEvent();
+    }
+}
+
+function addBigButtonEvent() {
+    const buttonDiv = qs('.big_b_div');
+    const buttonText = qs('#big_b');
+    
+    if (!buttonDiv || !buttonText) return;
+    
+    buttonDiv.addEventListener('click', function() {
+        const showOriginal = buttonText.textContent === '全部查看原图';
+        toggleAllImages(showOriginal);
+        
+        this.classList.toggle('is_small_button');
+        this.classList.toggle('is_big_button');
+        buttonText.textContent = showOriginal ? '全部查看小图' : '全部查看原图';
+    });
+}
+
+// ==================== 代码展示相关 ====================
+function createCodeElement(filePath, container) {
+    const wrapper = document.createElement('div');
+    const title = document.createElement('div');
+    const codeContainer = document.createElement('div');
+    const pre = document.createElement('pre');
+    const code = document.createElement('code');
+    
+    title.textContent = filePath;
+    title.classList.add('high_light');
+    code.classList.add('language-python');
+    
+    Object.assign(pre.style, {
+        width: CONFIG.CODE_VIEWER.PRE_WIDTH,
+        height: CONFIG.CODE_VIEWER.PRE_HEIGHT,
+        overflowX: 'auto',
+        overflowY: 'scroll',
+        backgroundColor: '#f8f8f8',
+        border: '1px solid #ddd',
+        borderRadius: '4px',
+        padding: '10px',
+        fontFamily: 'Courier New, monospace',
+        fontSize: '14px',
+        lineHeight: '1.4',
+        whiteSpace: 'pre',
+        boxSizing: 'border-box',
+        display: 'block'
+    });
+    
+    pre.appendChild(code);
+    codeContainer.appendChild(pre);
+    
+    Object.assign(codeContainer.style, {
+        width: CONFIG.CODE_VIEWER.CONTAINER_WIDTH,
+        height: CONFIG.CODE_VIEWER.CONTAINER_HEIGHT,
+        overflow: 'visible',
+        boxSizing: 'border-box'
+    });
+    
+    wrapper.appendChild(title);
+    wrapper.appendChild(codeContainer);
+    wrapper.classList.add('py_right_div', 'py_right_made');
+    container.appendChild(wrapper);
+    
+    loadCodeFile(filePath, code);
+}
+
+function loadCodeFile(filePath, codeElement) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', filePath, true);
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                codeElement.textContent = xhr.responseText;
+                if (typeof Prism !== 'undefined') {
+                    Prism.highlightElement(codeElement);
                 }
-            }
-            this.classList.add('is_big_button');
-            this.classList.remove('is_small_button');
-            bigb.innerText = '全部查看原图';
-        }
-    }
-}
-function AddBigButton() {
-    var pparent = document.getElementById('change-part2');
-    var sself = document.getElementById('big_b');
-    if (!sself) {
-        // removed=parent.removeChild(self);
-        var big_div = document.createElement('div');
-        var bigbutton = document.createElement('p');
-        var spann = document.createElement('span');
-        spann.classList.add('tiptop');
-        big_div.classList.add('big_b_div');
-        bigbutton.innerText='全部查看原图';
-        bigbutton.id='big_b';
-        big_div.style.cursor='pointer';
-        big_div.appendChild(bigbutton);
-        big_div.appendChild(spann);
-        pparent.appendChild(big_div);
-        AddBigButtonEvent();
-    }
-}
-function AddDivClickEvent() {
-    var objs = document.getElementsByClassName("bechange");
-    for(var i=0;i<objs.length;i++)
-    {
-        objs[i].onclick=function()
-        {
-            // window.open(this.src);
-            // if (this.style.width !== 'fit-content') {
-            //     var im=this.getElementsByTagName('img')[0];
-            //     im.style.position='static';
-            //     this.style.width='fit-content';
-            //     this.style.height='auto';
-            // }else {
-            //     var im=this.getElementsByTagName('img')[0];
-            //     im.style.position='absolute';
-            //     this.style.width='500px';
-            //     this.style.height='500px';
-            // }
-            if (hasClass(this,'small')) {
-                this.classList.add('big');
-                this.classList.remove('small');
-            }else if (hasClass(this,'big') || hasClass(this,'origin')){
-                this.classList.add('small');
-                this.classList.remove('big');
-                this.classList.remove('origin');
+            } else {
+                codeElement.textContent = `加载失败: ${filePath}`;
+                console.error('加载文件失败:', filePath, '状态码:', xhr.status);
             }
         }
-        objs[i].style.cursor = "pointer";
-    }
+    };
+    
+    xhr.onerror = function() {
+        codeElement.textContent = `网络错误: ${filePath}`;
+        console.error('网络请求失败:', filePath);
+    };
+    
+    xhr.send();
+}
+
+function displayCodeFiles(element, fileList) {
+    const container = qs('#change-part');
+    container.innerHTML = '';
+    
+    element.classList.add('py_selected_div');
+    element.classList.remove('py_select_div');
+    
+    fileList.forEach(filePath => {
+        createCodeElement(filePath, container);
+    });
 }
 
 function pushup() {
-    var will_delete = document.getElementsByClassName('py_right_div');
-    for (var i=0;i<will_delete.length;i++) {
-        will_delete[i].classList.add('py_right_delete');
-        will_delete[i].classList.remove('py_right_made');
-    }
-    setTimeout(function () {
-        for (var i=will_delete.length-1;i>=0;i--) {
-            var ppare = will_delete[i].parentElement;
-            ppare.removeChild(will_delete[i]);
-        }
-    },600);
-    var other_div = document.getElementsByClassName('py_left_div');
-    for (var i=0;i<other_div.length;i++) {
-        if (hasClass(other_div[i],'py_selected_div')) {
-            other_div[i].classList.add('py_select_div');
-            other_div[i].classList.remove('py_selected_div');
-        }
-    }
-}
-function yysin(element) {
-    var cp = document.getElementById('change-part');
-    cp.innerText = '';
-    element.classList.add('py_selected_div');
-    element.classList.remove('py_select_div');
-    var py_list = ['./static/py/yys.py', './static/py/interactt.py', './static/py/radd.py'];
-    for (var i = 0; i < py_list.length; i++) {
-        (function() {
-            var a_div = document.createElement('div');
-            var a_div_title = document.createElement('div');
-            var a_div_code = document.createElement('div');
-            var a_pre = document.createElement('pre');
-            var a_code = document.createElement('code');
-            var txtt = py_list[i];
-            a_div_title.innerText = txtt;
-            a_div_title.classList.add('high_light');
-            a_code.classList.add('language-python');
-            // 直接为 pre 元素设置样式，确保滚动功能正常
-            a_pre.style.width = '400px';
-            a_pre.style.height = '800px';
-            a_pre.style.overflowX = 'auto';
-            a_pre.style.overflowY = 'scroll';
-            a_pre.style.backgroundColor = '#f8f8f8';
-            a_pre.style.border = '1px solid #ddd';
-            a_pre.style.borderRadius = '4px';
-            a_pre.style.padding = '10px';
-            a_pre.style.fontFamily = 'Courier New, monospace';
-            a_pre.style.fontSize = '14px';
-            a_pre.style.lineHeight = '1.4';
-            a_pre.style.whiteSpace = 'pre';
-            a_pre.style.boxSizing = 'border-box';
-            a_pre.style.display = 'block';
-            a_pre.appendChild(a_code);
-            a_div_code.appendChild(a_pre);
-            a_div.appendChild(a_div_title);
-            a_div.appendChild(a_div_code);
-            a_div.classList.add('py_right_div');
-            a_div.classList.add('py_right_made');
-            // 为代码容器添加样式，确保不限制滚动
-            a_div_code.style.width = '420px';
-            a_div_code.style.height = '820px';
-            a_div_code.style.overflow = 'visible';
-            a_div_code.style.boxSizing = 'border-box';
-            cp.appendChild(a_div);
-            
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', txtt, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    a_code.textContent = xhr.responseText;
-                    if (typeof Prism !== 'undefined') {
-                        Prism.highlightElement(a_code);
-                    }
-                }
-            };
-            xhr.send();
-        })();
-    }
-}
-function AddYYSscriptevent() {
-    var yys_s = document.getElementById('yys_script');
-    yys_s.onclick = function () {
-        var that = this;
-        var timee;
-        // var py_right_item = document.getElementsByClassName('py_right_div')[0];
-        var cp=document.getElementById('change-part');
-        if (hasClass(that,'py_selected_div')){
-            pushup();
-        }else {
-            if (cp.innerText ==='') {
-                timee=0;
-            }else {
-                pushup();
-                timee=800;
+    const elementsToRemove = qsa('.py_right_div');
+    elementsToRemove.forEach(el => {
+        el.classList.add('py_right_delete');
+        el.classList.remove('py_right_made');
+    });
+    
+    setTimeout(() => {
+        elementsToRemove.forEach(el => {
+            const parent = el.parentElement;
+            if (parent) {
+                parent.removeChild(el);
             }
-            setTimeout(function () {
-                return yysin(that);
-            },timee);
-            // yysin(that);
+        });
+    }, CONFIG.ANIMATION.REMOVE_DELAY);
+    
+    const leftDivs = qsa('.py_left_div');
+    leftDivs.forEach(div => {
+        if (hasClass(div, 'py_selected_div')) {
+            div.classList.add('py_select_div');
+            div.classList.remove('py_selected_div');
         }
+    });
+}
 
-    }
-}
-function pigin(element) {
-    var cp = document.getElementById('change-part');
-    cp.innerText = '';
-    // var other_div = document.getElementsByClassName('py_left_div');
-    // for (var i=0;i<other_div.length;i++) {
-    //     other_div[i].classList.add('py_select_div');
-    //     other_div[i].classList.remove('py_selected_div');
-    // }
-    element.classList.add('py_selected_div');
-    element.classList.remove('py_select_div');
-    var pig_list=['./static/py/pig.py']
-    for (var i=0;i<pig_list.length;i++) {
-        (function() {
-            var a_div = document.createElement('div');
-            var a_div_title = document.createElement('div');
-            var a_div_code = document.createElement('div');
-            var a_pre = document.createElement('pre');
-            var a_code = document.createElement('code');
-            var txtt = pig_list[i];
-            a_div_title.innerText = txtt;
-            a_div_title.classList.add('high_light');
-            a_code.classList.add('language-python');
-            // 直接为 pre 元素设置样式，确保滚动功能正常
-            a_pre.style.width = '400px';
-            a_pre.style.height = '800px';
-            a_pre.style.overflowX = 'auto';
-            a_pre.style.overflowY = 'scroll';
-            a_pre.style.backgroundColor = '#f8f8f8';
-            a_pre.style.border = '1px solid #ddd';
-            a_pre.style.borderRadius = '4px';
-            a_pre.style.padding = '10px';
-            a_pre.style.fontFamily = 'Courier New, monospace';
-            a_pre.style.fontSize = '14px';
-            a_pre.style.lineHeight = '1.4';
-            a_pre.style.whiteSpace = 'pre';
-            a_pre.style.boxSizing = 'border-box';
-            a_pre.style.display = 'block';
-            a_pre.appendChild(a_code);
-            a_div_code.appendChild(a_pre);
-            a_div.appendChild(a_div_title);
-            a_div.appendChild(a_div_code);
-            a_div.classList.add('py_right_div');
-            a_div.classList.add('py_right_made');
-            // 为代码容器添加样式，确保不限制滚动
-            a_div_code.style.width = '420px';
-            a_div_code.style.height = '820px';
-            a_div_code.style.overflow = 'visible';
-            a_div_code.style.boxSizing = 'border-box';
-            cp.appendChild(a_div);
-            
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', txtt, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    a_code.textContent = xhr.responseText;
-                    if (typeof Prism !== 'undefined') {
-                        Prism.highlightElement(a_code);
-                    }
-                }
-            };
-            xhr.send();
-        })();
-    }
-}
-function AddPIGscriptevent() {
-    var pig_s = document.getElementById('pig_script');
-    pig_s.onclick = function () {
-        var that = this;
-        // var py_right_item = document.getElementsByClassName('py_right_div')[0];
-        var timee;
-        var cp=document.getElementById('change-part');
-        if (hasClass(that,'py_selected_div')) {
+function addScriptClickEvent(elementId, fileList) {
+    const element = qs(`#${elementId}`);
+    if (!element) return;
+    
+    element.addEventListener('click', function() {
+        const container = qs('#change-part');
+        let delay = 0;
+        
+        if (hasClass(this, 'py_selected_div')) {
             pushup();
-        }else {
-            if (cp.innerText === '') {
-                timee=0;
-            }else {
+        } else {
+            delay = container.innerText === '' ? 0 : CONFIG.ANIMATION.TRANSITION_DELAY;
+            if (delay > 0) {
                 pushup();
-                timee=800;
             }
-            setTimeout(function () {
-                return pigin(that);
-            },timee);
+            setTimeout(() => {
+                displayCodeFiles(this, fileList);
+            }, delay);
         }
+    });
+}
 
+// ==================== 页面切换相关 ====================
+function clearContainers() {
+    const cp = qs('#change-part');
+    const cp2 = qs('#change-part2');
+    if (cp) cp.innerText = '';
+    if (cp2) cp2.innerText = '';
+}
+
+function moveSlide(position) {
+    const slide = qs('.sideline');
+    if (slide) {
+        slide.style.marginLeft = position;
     }
 }
 
-function AddYelEvent() {
-    var yell_div = document.getElementById('yellow-site');
-    yell_div.onclick = function () {
-        return toMonkey();
+function createImageGallery(imageList) {
+    const container = qs('#change-part');
+    imageList.forEach(src => {
+        const div = document.createElement('div');
+        const img = document.createElement('img');
+        img.src = src;
+        div.appendChild(img);
+        div.classList.add('small', 'bechange');
+        container.appendChild(div);
+    });
+    
+    addImageClickEvent();
+    addBigButton();
+}
+
+function cpy() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.C_PY);
+    
+    const cp2 = qs('#change-part2');
+    
+    const createScriptDiv = (id, imgSrc) => {
+        const div = document.createElement('div');
+        const img = document.createElement('img');
+        const tooltip = document.createElement('span');
+        
+        tooltip.classList.add('tiptop');
+        img.src = imgSrc;
+        img.classList.add('middle_img');
+        
+        div.appendChild(tooltip);
+        div.appendChild(img);
+        div.id = id;
+        div.style.cursor = 'pointer';
+        div.classList.add('py_left_div');
+        
+        return div;
+    };
+    
+    const yysScript = createScriptDiv('yys_script', './static/py_img/yys.jpg');
+    const pigScript = createScriptDiv('pig_script', './static/py_img/pig.jpg');
+    
+    cp2.appendChild(yysScript);
+    cp2.appendChild(pigScript);
+    
+    addScriptClickEvent('yys_script', ['./static/py/yys.py', './static/py/interactt.py', './static/py/radd.py']);
+    addScriptClickEvent('pig_script', ['./static/py/pig.py']);
+}
+
+function chf() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.C_HF);
+    
+    const cp2 = qs('#change-part2');
+    
+    const gameDiv = document.createElement('div');
+    gameDiv.id = 'hf_left_div1';
+    gameDiv.classList.add('hf_left_div1');
+    gameDiv.textContent = '互动';
+    
+    const mvDiv = document.createElement('div');
+    mvDiv.id = 'hf_left_div2';
+    mvDiv.classList.add('hf_left_div2');
+    mvDiv.textContent = 'MV';
+    
+    const leftDiv1 = document.createElement('div');
+    const leftDiv2 = document.createElement('div');
+    
+    leftDiv1.classList.add('hf_left');
+    leftDiv1.id = 'hf_left1';
+    leftDiv1.appendChild(gameDiv);
+    
+    leftDiv2.classList.add('hf_left');
+    leftDiv2.id = 'hf_left2';
+    leftDiv2.appendChild(mvDiv);
+    
+    cp2.appendChild(leftDiv1);
+    cp2.appendChild(leftDiv2);
+    
+    setTimeout(() => {
+        const gameDivEl = qs('#hf_left_div1');
+        const mvDivEl = qs('#hf_left_div2');
+        if (gameDivEl) gameDivEl.classList.add('close');
+        if (mvDivEl) mvDivEl.classList.add('close');
+    }, 1000);
+    
+    addGameButtonEvent();
+    addMVButtonEvent();
+}
+
+function cai() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.C_AI);
+    createImageGallery(['./static/aimer/aimer1.jpg', './static/aimer/aimer2.jpg', './static/aimer/aimer3.jpg']);
+}
+
+function c51() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.C_51);
+    createImageGallery([
+        './static/51/fiveone1.jpg',
+        './static/51/fiveone2.jpg',
+        './static/51/fiveone3.jpg',
+        './static/51/fiveone4.jpg'
+    ]);
+}
+
+function cjjy() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.C_JJY);
+    createImageGallery(['./static/jjy/0040jbadly1h9bej7163ej60u0140qd802.jpg']);
+}
+
+function cyy() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.C_YY);
+    createImageGallery(['./static/yy/YY1.jpg', './static/yy/YY2.jpg']);
+}
+
+function home() {
+    clearContainers();
+    moveSlide(CONFIG.SIDEBAR_POSITIONS.HOME);
+    
+    const cp2 = qs('#change-part2');
+    const yellDiv = document.createElement('div');
+    yellDiv.classList.add('hm_left_div');
+    yellDiv.id = 'yellow-site';
+    yellDiv.textContent = '黄网';
+    cp2.appendChild(yellDiv);
+    
+    addYellowSiteEvent();
+}
+
+// ==================== 黄网跳转相关 ====================
+function addYellowSiteEvent() {
+    const yellowSite = qs('#yellow-site');
+    if (yellowSite) {
+        yellowSite.addEventListener('click', toMonkey);
     }
 }
+
 function toMonkey() {
     alert('悟空,你又调皮了!');
-    var wind_yel = window.open('_blank');
-    setTimeout(function () {
-        return wind_yel.location='./static/yellow.html';
-    },250);
-    // window.open('./static/yellow.html');
+    const newWindow = window.open('_blank');
+    setTimeout(() => {
+        if (newWindow) {
+            newWindow.location = './static/yellow.html';
+        }
+    }, CONFIG.ANIMATION.TOGGLE_DELAY);
 }
 
-function hf_push_div(element,classname) {
-    var will_push = document.getElementsByClassName(classname);
-    for (var i=0;i<will_push.length;i++) {
-        will_push[i].classList.add('game_push');
-        will_push[i].classList.remove('game_pull');
-    }
+// ==================== 游戏相关 ====================
+function hf_push_div(element, className) {
+    const elements = qsa(`.${className}`);
+    elements.forEach(el => {
+        el.classList.add('game_push');
+        el.classList.remove('game_pull');
+    });
+    
     element.classList.add('close');
     element.classList.remove('open');
-    setTimeout(function () {
-        for (var i=will_push.length-1;i>=0;i--) {
-            var ppare = will_push[i].parentElement;
-            ppare.removeChild(will_push[i]);
+    
+    setTimeout(() => {
+        for (let i = elements.length - 1; i >= 0; i--) {
+            const parent = elements[i].parentElement;
+            if (parent) {
+                parent.removeChild(elements[i]);
+            }
         }
-    },500);
+    }, CONFIG.ANIMATION.REMOVE_DELAY_GAME);
 }
+
 function game_div_in(element) {
-    var game_div1 = document.createElement('div');
-    var game_div2 = document.createElement('div');
-    var ppare = element.parentElement;
+    const parent = element.parentElement;
     element.classList.add('open');
     element.classList.remove('close');
-    game_div1.id = 'game1';
-    game_div1.innerText = '星座图';
-    game_div1.classList.add('game');
-    game_div1.classList.add('game_pull');
-
-    game_div2.id = 'game2';
-    game_div2.classList.add('game');
-    game_div2.classList.add('game_pull');
-
-    ppare.appendChild(game_div1);
-    ppare.appendChild(game_div2);
-    Addgame1Event();
-    Addgame2Event();
+    
+    const gameDiv1 = document.createElement('div');
+    gameDiv1.id = 'game1';
+    gameDiv1.textContent = '星座图';
+    gameDiv1.classList.add('game', 'game_pull');
+    
+    const gameDiv2 = document.createElement('div');
+    gameDiv2.id = 'game2';
+    gameDiv2.classList.add('game', 'game_pull');
+    
+    parent.appendChild(gameDiv1);
+    parent.appendChild(gameDiv2);
+    
+    if (typeof addGame1Event === 'function') {
+        addGame1Event();
+    } else {
+        console.error('addGame1Event 函数未定义');
+    }
+    
+    if (typeof addGame2Event === 'function') {
+        addGame2Event();
+    } else {
+        console.error('addGame2Event 函数未定义');
+    }
 }
-function AddGameButtonEvent() {
-    var game_div = document.getElementById('hf_left_div1');
-    // var hf_left1 = document.getElementById('hf_left1');
 
-    game_div.onclick = function () {
-        var that = this;
-        if (hasClass(that,'close')) {
-            game_div_in(that);
-        }else {
-            hf_push_div(that,'game');
+function addGameButtonEvent() {
+    const gameDiv = qs('#hf_left_div1');
+    if (!gameDiv) return;
+    
+    gameDiv.addEventListener('click', function() {
+        if (hasClass(this, 'close')) {
+            game_div_in(this);
+        } else {
+            hf_push_div(this, 'game');
         }
-    }
-    // game_div.onclick = function () {
-    //     var game1_div = document.createElement('div');
-    //     game1_div.classList.add('game');
-    //     game1_div.id = 'game1';
-    //
-    //     var game2_div = document.createElement('div');
-    //     game2_div.classList.add('game');
-    //     game2_div.id = 'game2';
-    //     var that = this;
-    //     function removecg(element) {
-    //         var game1 = document.getElementById('game1');
-    //         var game2 = document.getElementById('game2');
-    //         var ppare = element.parentElement;
-    //         ppare.removeChild(game1);
-    //         ppare.removeChild(game2);
-    //     }
-    //     if (hasClass(game_div,'close')) {
-    //         game1_div.classList.add('game_pull');
-    //         game1_div.classList.remove('game_push');
-    //         hf_left1.appendChild(game1_div);
-    //         Addgame1Event();
-    //         game2_div.classList.add('game_pull');
-    //         game2_div.classList.remove('game_push');
-    //         hf_left1.appendChild(game2_div);
-    //         Addgame2Event();
-    //         game_div.classList.add('open');
-    //         game_div.classList.remove('close');
-    //         // game_div.classList.remove('hf_left_div1');
-    //     }else {
-    //         game1_div.classList.add('game_push');
-    //         game1_div.classList.remove('game_pull');
-    //         game2_div.classList.add('game_push');
-    //         game2_div.classList.remove('game_pull');
-    //         setTimeout(function () {
-    //             return removecg(that);
-    //         },1000);
-    //         game_div.classList.add('close');
-    //         game_div.classList.remove('open');
-    //     }
-    // }
+    });
 }
-function AddMVButtonEvent() {
-    var mv_div = document.getElementById('hf_left_div2');
-    var hf_left2 = document.getElementById('hf_left2');
-    var mv1_div = document.createElement('div');
-    mv1_div.classList.add('mv');
-    mv1_div.id = 'mv1';
-    mv1_div.innerText = 'Aimer';
 
-    var mv2_div = document.createElement('div');
-    mv2_div.classList.add('mv');
-    mv2_div.id = 'mv2';
-    mv2_div.innerText = '春茶';
-
-    function removecm() {
-        hf_left2.removeChild(mv1_div);
-        hf_left2.removeChild(mv2_div);
-    }
-
-    mv_div.onclick = function () {
-        if (hasClass(mv_div,'close')) {
-            mv1_div.classList.add('game_pull');
-            mv1_div.classList.remove('game_push');
-            hf_left2.appendChild(mv1_div);
-            Addmv1Event();
-            mv2_div.classList.add('game_pull');
-            mv2_div.classList.remove('game_push');
-            hf_left2.appendChild(mv2_div);
-            Addmv2Event();
-            mv_div.classList.add('open');
-            mv_div.classList.remove('close');
-            // mv_div.classList.remove('hf_left_div2');
-        }else {
-            mv1_div.classList.add('game_push');
-            mv1_div.classList.remove('game_pull');
-            mv2_div.classList.add('game_push');
-            mv2_div.classList.remove('game_pull');
-            setTimeout(function () {
-                removecm();
-            },500);
-            mv_div.classList.add('close');
-            mv_div.classList.remove('open');
+// ==================== MV相关 ====================
+function addMVButtonEvent() {
+    const mvDiv = qs('#hf_left_div2');
+    const hfLeft2 = qs('#hf_left2');
+    if (!mvDiv || !hfLeft2) return;
+    
+    const mv1Div = document.createElement('div');
+    mv1Div.classList.add('mv');
+    mv1Div.id = 'mv1';
+    mv1Div.textContent = 'Aimer';
+    
+    const mv2Div = document.createElement('div');
+    mv2Div.classList.add('mv');
+    mv2Div.id = 'mv2';
+    mv2Div.textContent = '春茶';
+    
+    const removeMV = () => {
+        if (hfLeft2.contains(mv1Div)) {
+            hfLeft2.removeChild(mv1Div);
         }
-    }
+        if (hfLeft2.contains(mv2Div)) {
+            hfLeft2.removeChild(mv2Div);
+        }
+    };
+    
+    mvDiv.addEventListener('click', function() {
+        if (hasClass(this, 'close')) {
+            mv1Div.classList.add('game_pull');
+            mv1Div.classList.remove('game_push');
+            hfLeft2.appendChild(mv1Div);
+            addMv1Event();
+            
+            mv2Div.classList.add('game_pull');
+            mv2Div.classList.remove('game_push');
+            hfLeft2.appendChild(mv2Div);
+            addMv2Event();
+            
+            this.classList.add('open');
+            this.classList.remove('close');
+        } else {
+            mv1Div.classList.add('game_push');
+            mv1Div.classList.remove('game_pull');
+            mv2Div.classList.add('game_push');
+            mv2Div.classList.remove('game_pull');
+            
+            setTimeout(removeMV, CONFIG.ANIMATION.REMOVE_DELAY_GAME);
+            
+            this.classList.add('close');
+            this.classList.remove('open');
+        }
+    });
 }
-// 星座数据
+
+function addMv1Event() {
+    const mv1 = qs('#mv1');
+    if (!mv1) return;
+    
+    mv1.addEventListener('click', function() {
+        const container = qs('#change-part');
+        container.innerText = '';
+        
+        const videoDiv = document.createElement('div');
+        const video = document.createElement('video');
+        const source = document.createElement('source');
+        
+        source.src = './static/LAST_STARDUST.mp4';
+        source.type = 'video/mp4';
+        video.preload = 'auto';
+        video.controls = 'controls';
+        video.appendChild(source);
+        videoDiv.appendChild(video);
+        container.appendChild(videoDiv);
+    });
+}
+
+function addMv2Event() {
+    const mv2 = qs('#mv2');
+    if (!mv2) return;
+    
+    mv2.addEventListener('click', function() {
+        window.open('https://www.bilibili.com/video/av22551705');
+    });
+}
+
+// ==================== 星座相关 ====================
 const starData = {
     "白羊座": [
         [[0.30, 0.78], [0.34, 0.66], [0.28, 0.48], [0.60, 0.26], [0.65, 0.20], [0.71, 0.23], [0.70, 0.32], [0.72, 0.36]],
@@ -503,27 +608,33 @@ const starData = {
     ]
 };
 
-// 根据出生日期获取星座信息
-function getStarSign(ts) {
-    const d = new Date(ts);
-    const sign = d.getMonth() * 100 + d.getDate();
+function getStarSign(timestamp) {
+    const date = new Date(timestamp);
+    const sign = date.getMonth() * 100 + date.getDate();
     
-    if (sign < 20) return "摩羯座";
-    if (sign < 119) return "水瓶座";
-    if (sign < 221) return "双鱼座";
-    if (sign < 320) return "白羊座";
-    if (sign < 421) return "金牛座";
-    if (sign < 522) return "双子座";
-    if (sign < 623) return "巨蟹座";
-    if (sign < 723) return "狮子座";
-    if (sign < 823) return "处女座";
-    if (sign < 923) return "天秤座";
-    if (sign < 1022) return "天蝎座";
-    if (sign < 1122) return "射手座";
-    return "摩羯座";
+    const signs = [
+        { value: 20, name: '摩羯座' },
+        { value: 119, name: '水瓶座' },
+        { value: 221, name: '双鱼座' },
+        { value: 320, name: '白羊座' },
+        { value: 421, name: '金牛座' },
+        { value: 522, name: '双子座' },
+        { value: 623, name: '巨蟹座' },
+        { value: 723, name: '狮子座' },
+        { value: 823, name: '处女座' },
+        { value: 923, name: '天秤座' },
+        { value: 1022, name: '天蝎座' },
+        { value: 1122, name: '射手座' }
+    ];
+    
+    for (const s of signs) {
+        if (sign < s.value) {
+            return s.name;
+        }
+    }
+    return '摩羯座';
 }
 
-// 圆形类
 class Circle {
     constructor(x, y, r) {
         this.x = x;
@@ -533,25 +644,24 @@ class Circle {
     
     draw(ctx) {
         ctx.beginPath();
-        const g1 = ctx.createRadialGradient(
+        const gradient = ctx.createRadialGradient(
             this.x, this.y, Math.round(Math.random() * 1 + 1),
             this.x, this.y, Math.round(Math.random() * 3 + 6)
         );
-        g1.addColorStop(0, 'rgba(255, 255, 255, .9)');
-        g1.addColorStop(1, 'rgba(0, 0, 0, .1)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, .9)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, .1)');
+        
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
-        ctx.fillStyle = g1;
+        ctx.fillStyle = gradient;
         ctx.closePath();
         ctx.fill();
         return this;
     }
 }
 
-// 绘制星座
 function drawConstellation(ctx, data, width, height) {
     const [points, lines] = data;
     
-    // 绘制线条
     ctx.strokeStyle = "#FFF";
     ctx.beginPath();
     
@@ -568,22 +678,23 @@ function drawConstellation(ctx, data, width, height) {
     
     ctx.stroke();
     
-    // 绘制星星
     for (const point of points) {
         new Circle(point[0] * width, point[1] * height).draw(ctx);
     }
 }
 
-// 初始化星座绘制
+let constellationTimer = null;
+
 function initConstellationDrawing(canvas, birthInput, button) {
     const ctx = canvas.getContext("2d");
     ctx.font = "30px Courier New";
-    let timer = null;
     
     button.addEventListener('click', function(e) {
         e.preventDefault();
         
-        clearInterval(timer);
+        if (constellationTimer) {
+            clearInterval(constellationTimer);
+        }
         
         if (!birthInput.value) {
             alert("请选择您的出生日期");
@@ -593,279 +704,81 @@ function initConstellationDrawing(canvas, birthInput, button) {
         canvas.style.display = "block";
         const date = new Date(birthInput.value.replace(/-/g, '/')).getTime();
         
-        timer = setInterval(function() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const starSign = getStarSign(date);
-            ctx.strokeText(starSign, 50, 50);
-            drawConstellation(ctx, starData[starSign], canvas.width, canvas.height);
-        }, 500);
+        try {
+            constellationTimer = setInterval(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const starSign = getStarSign(date);
+                ctx.strokeText(starSign, 50, 50);
+                drawConstellation(ctx, starData[starSign], canvas.width, canvas.height);
+            }, 500);
+        } catch (error) {
+            if (constellationTimer) {
+                clearInterval(constellationTimer);
+            }
+            console.error('星座绘制失败:', error);
+        }
     });
 }
 
-function Addgame1Event() {
-    const game1 = document.getElementById('game1');
+function addGame1Event() {
+    const game1 = qs('#game1');
+    if (!game1) return;
     
     game1.addEventListener('click', function() {
-        const cp = document.getElementById('change-part');
-        cp.innerHTML = '';
+        const container = qs('#change-part');
+        container.innerHTML = '';
         
-        // 创建DOM元素
         const box = document.createElement('div');
-        const p_t = document.createElement('p');
+        box.id = 'box';
+        
+        const paragraph = document.createElement('p');
+        paragraph.textContent = '请选择或输入你的生日';
+        paragraph.id = 'p_bir';
+        
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.id = 'birth';
+        
+        const button = document.createElement('input');
+        button.type = 'button';
+        button.id = 'btn';
+        button.value = '展示星空图';
+        
         const canvas = document.createElement('canvas');
-        const input1 = document.createElement('input');
-        const input2 = document.createElement('input');
-        
-        // 设置元素属性
-        p_t.textContent = '请选择或输入你的生日';
-        p_t.id = 'p_bir';
-        
-        input1.type = 'date';
-        input1.id = 'birth';
-        
-        input2.type = 'button';
-        input2.id = 'btn';
-        input2.value = '展示星空图';
-        
         canvas.id = 'canvas';
         canvas.width = '550';
         canvas.height = '550';
         
-        box.id = 'box';
+        box.appendChild(paragraph);
+        box.appendChild(dateInput);
+        box.appendChild(button);
         
-        // 组装元素
-        box.appendChild(p_t);
-        box.appendChild(input1);
-        box.appendChild(input2);
+        container.appendChild(box);
+        container.appendChild(canvas);
         
-        cp.appendChild(box);
-        cp.appendChild(canvas);
-        
-        // 初始化星座绘制功能
-        initConstellationDrawing(canvas, input1, input2);
+        initConstellationDrawing(canvas, dateInput, button);
     });
 }
-function Addgame2Event() {
-    var game2 = document.getElementById('game2');
-    game2.onclick = function () {
+
+function addGame2Event() {
+    const game2 = qs('#game2');
+    if (!game2) return;
+    
+    game2.addEventListener('click', function() {
         alert('come soon...');
-    }
-}
-function Addmv1Event() {
-    var mv1 = document.getElementById('mv1');
-    mv1.onclick = function () {
-        var cp = document.getElementById('change-part');
-        cp.innerText = '';
-        var video_div = document.createElement('div');
-        var mv = document.createElement('video');
-        var sour = document.createElement('source');
-        sour.src = './static/LAST_STARDUST.mp4';
-        sour.type = 'video/mp4';
-        mv.preload = 'auto';
-        mv.controls = 'controls';
-        mv.appendChild(sour);
-        video_div.appendChild(mv);
-        cp.appendChild(video_div);
-    }
-}
-function Addmv2Event() {
-    var mv2 = document.getElementById('mv2');
-    mv2.onclick = function () {
-        // alert('come soon...');
-        window.open('https://www.bilibili.com/video/av22551705');
-    }
+    });
 }
 
-function cpy() {
-    var cp=document.getElementById('change-part');
-    cp.innerText='';
-    var cp2=document.getElementById('change-part2');
-    cp2.innerText='';
-    var slide = document.getElementsByClassName('sideline')[0];
-    slide.style.marginLeft = '100px';
-
-    var yys_script = document.createElement('div');
-    var yys_img = document.createElement('img');
-    var spann = document.createElement('span');
-    spann.classList.add('tiptop');
-    yys_img.src = './static/py_img/yys.jpg';
-    yys_img.classList.add('middle_img');
-    yys_script.appendChild(spann);
-    yys_script.appendChild(yys_img);
-    yys_script.id='yys_script';
-    yys_script.style.cursor='pointer';
-    // yys_script.innerText='YYS_SCRIPT';
-    yys_script.classList.add('py_left_div');
-    // yys_script.classList.add('py_select_div');
-    cp2.appendChild(yys_script);
-    AddYYSscriptevent();
-
-    var pig_script = document.createElement('div');
-    var pig_img = document.createElement('img');
-    pig_img.src = './static/py_img/pig.jpg';
-    pig_img.classList.add('middle_img');
-    pig_script.appendChild(spann);
-    pig_script.appendChild(pig_img);
-    pig_script.id='pig_script';
-    pig_script.style.cursor = 'pointer';
-    // pig_script.innerText='PIG_SCRIPT';
-    pig_script.classList.add('py_left_div');
-    // pig_script.classList.add('py_select_div');
-    cp2.appendChild(pig_script);
-    AddPIGscriptevent();
-
-}
-function chf() {
-    var cp=document.getElementById('change-part');
-    cp.innerText='';
-    var cp2=document.getElementById('change-part2');
-    cp2.innerText='';
-    var slide = document.getElementsByClassName('sideline')[0];
-    slide.style.marginLeft = '200px';
-
-    var game_div = document.createElement('div');
-    var mv_div = document.createElement('div');
-    var left_div1 = document.createElement('div');
-    var left_div2 = document.createElement('div');
-    game_div.id = 'hf_left_div1';
-    game_div.classList.add('hf_left_div1');
-    game_div.innerText = '互动'
-    mv_div.id = 'hf_left_div2';
-    mv_div.classList.add('hf_left_div2');
-    mv_div.innerText = 'MV';
-
-    left_div1.classList.add('hf_left');
-    left_div1.id = 'hf_left1';
-    left_div2.classList.add('hf_left');
-    left_div2.id = 'hf_left2';
-    left_div1.appendChild(game_div);
-    left_div2.appendChild(mv_div);
-    cp2.appendChild(left_div1);
-    cp2.appendChild(left_div2);
-    setTimeout(function () {
-        var game_div = document.getElementById('hf_left_div1');
-        game_div.classList.add('close');
-        // game_div.classList.remove('hf_left_div1');
-        var mv_div = document.getElementById('hf_left_div2');
-        mv_div.classList.add('close');
-        // mv_div.classList.remove('hf_left_div2');
-    },1000);
-    AddGameButtonEvent();
-    AddMVButtonEvent();
-}
-function cai() {
-    var cp=document.getElementById('change-part');
-    cp.innerText='';
-    var cp2=document.getElementById('change-part2');
-    cp2.innerText='';
-    var slide = document.getElementsByClassName('sideline')[0];
-    slide.style.marginLeft = '300px';
-
-    var ai_list=['./static/aimer/aimer1.jpg','./static/aimer/aimer2.jpg','./static/aimer/aimer3.jpg']
-    for (var i = 0;i<ai_list.length;i++) {
-        var ai_div = document.createElement('div');
-        var ai_p = document.createElement('img');
-        ai_p.src=ai_list[i];
-        ai_div.appendChild(ai_p);
-        ai_div.classList.add('small');
-        ai_div.classList.add('bechange');
-        cp.appendChild(ai_div);
-    }
-    AddDivClickEvent();
-    //加全图按钮
-    AddBigButton();
-}
-function c51() {
-    var cp=document.getElementById('change-part');
-    cp.innerText='';
-    var cp2=document.getElementById('change-part2');
-    cp2.innerText='';
-    var slide = document.getElementsByClassName('sideline')[0];
-    slide.style.marginLeft = '500px';
-
-    var fo_list=['./static/51/fiveone1.jpg','./static/51/fiveone2.jpg','./static/51/fiveone3.jpg','./static/51/fiveone4.jpg']
-    for (var i=0;i<fo_list.length;i++) {
-        var fo_div = document.createElement('div');
-        var fo_p = document.createElement('img');
-        fo_p.src=fo_list[i];
-        fo_div.appendChild(fo_p);
-        fo_div.classList.add('small');
-        fo_div.classList.add('bechange');
-        cp.appendChild(fo_div);
-    }
-
-    AddDivClickEvent();
-    AddBigButton();
-}
-function cjjy() {
-    var cp=document.getElementById('change-part');
-    cp.innerText='';
-    var cp2=document.getElementById('change-part2');
-    cp2.innerText='';
-    var slide = document.getElementsByClassName('sideline')[0];
-    slide.style.marginLeft = '400px';
-
-    var jjy_list=['./static/jjy/0040jbadly1h9bej7163ej60u0140qd802.jpg']
-    for (var i=0;i<jjy_list.length;i++) {
-        var jjy_div = document.createElement('div');
-        var jjy_p = document.createElement('img');
-        jjy_p.src=jjy_list[i];
-        jjy_div.appendChild(jjy_p);
-        jjy_div.classList.add('small');
-        jjy_div.classList.add('bechange');
-        cp.appendChild(jjy_div);
-    }
-    AddDivClickEvent();
-    AddBigButton();
-}
-function cyy() {
-    var cp=document.getElementById('change-part');
-    cp.innerText='';
-    var cp2=document.getElementById('change-part2');
-    cp2.innerText='';
-    var slide = document.getElementsByClassName('sideline')[0];
-    slide.style.marginLeft = '700px';
-
-    // var yy1=document.createElement('img');
-    // yy1.src='./static/YYlu.jpg';
-    // yy1.classList.add('small');
-    // cp.appendChild(yy1);
-    // var yy2=document.createElement('img');
-    // yy2.src='./static/YYm.jpg';
-    // yy2.classList.add('small');
-    // cp.appendChild(yy2);
-    var yy_list=['./static/yy/YY1.jpg','./static/yy/YY2.jpg']
-    for (var i=0;i<yy_list.length;i++) {
-        var yy_div = document.createElement('div');
-        var yy_p = document.createElement('img');
-        yy_p.src=yy_list[i];
-        yy_div.appendChild(yy_p);
-        yy_div.classList.add('small');
-        yy_div.classList.add('bechange');
-        cp.appendChild(yy_div);
-    }
-    AddDivClickEvent();
-    AddBigButton();
-}
-function home() {
-    // var is_home=confirm('将回到主界面');
-    // if (is_home) {
-        var cp=document.getElementById('change-part');
-        var cp2=document.getElementById('change-part2');
-        var slide = document.getElementsByClassName('sideline')[0];
-        slide.style.marginLeft = '0px';
-        // document.getElementById('change-part').innerText = '';
-        // document.getElementById('change-part2').innerText = '';
-        cp.innerText = '';
-        cp2.innerText = '';
-        var yell_div = document.createElement('div');
-        yell_div.classList.add('hm_left_div');
-        yell_div.id = 'yellow-site';
-        yell_div.innerText = '黄网';
-        cp2.appendChild(yell_div);
-        AddYelEvent();
-        // var bigbutton = document.getElementById('big_b');
-        // var big_b_par = bigbutton.parentElement;
-        // big_b_par.removeChild(bigbutton);
-    // }
-}
+// ==================== 旧函数别名（向后兼容） ====================
+const AddBigButton = addBigButton;
+const AddBigButtonEvent = addBigButtonEvent;
+const AddDivClickEvent = addImageClickEvent;
+const AddYYSscriptevent = () => addScriptClickEvent('yys_script', ['./static/py/yys.py', './static/py/interactt.py', './static/py/radd.py']);
+const AddPIGscriptevent = () => addScriptClickEvent('pig_script', ['./static/py/pig.py']);
+const AddYelEvent = addYellowSiteEvent;
+const AddGameButtonEvent = addGameButtonEvent;
+const AddMVButtonEvent = addMVButtonEvent;
+const Addgame1Event = addGame1Event;
+const Addgame2Event = addGame2Event;
+const Addmv1Event = addMv1Event;
+const Addmv2Event = addMv2Event;
