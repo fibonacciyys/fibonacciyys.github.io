@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="李协钊,伍一">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="李协钊的个人网站 - fibonacciyys">
+    <meta name="keywords" content="李协钊,伍一,fibonacciyys,个人网站">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <title>李协钊.fibonacciyys</title>
     <!--父级div-css-->
     <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -19,13 +22,12 @@
 
     <script src="./js/interact.js"></script>
     <script>
-        function a() {
+        function initPage() {
             var cp = document.createElement('div');
             var bd = document.getElementById('bg');
             if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)){
                 cp.id = 'change-part';
                 bd.appendChild(cp);
-                // alert('finish');
             }else {
                 var star_div1 = document.createElement('div');
                 var star_div2 = document.createElement('div');
@@ -34,7 +36,7 @@
                 bd.appendChild(star_div1);
                 bd.appendChild(star_div2);
                 setTimeout(function () {
-                    var src_list = ['./js/particles.js','./js/app.js','./js/lib/stats.js']
+                    var src_list = ['./js/particles.js','./js/app.js','./js/lib/stats.js'];
                     for (var i = 0;i<src_list.length;i++) {
                         var script_action = document.createElement('script');
                         script_action.src = src_list[i];
@@ -45,12 +47,11 @@
                 },200);
             }
         }
-        // document.body.onload = a();
     </script>
 
 
 </head>
-<body id="bg" onload="a()">
+<body id="bg" onload="initPage()">
 <div class="box">
     <ul class="f-nav" id='f-nav'>
         <li onclick="home()">Home</li>
@@ -73,13 +74,5 @@
         <div id="yellow-site" class="hm_left_div" onclick="toMonkey()">黄网</div>
     </div>
 </div>
-<!--<div style="padding-top: 60px"></div>-->
-<!--<div id="particles-js"></div>-->
-<!--<script src="./js/particles.js"></script>-->
-<!--<script src="./js/app.js"></script>-->
-<!--<script src="./js/lib/stats.js"></script>-->
-<!--<div id="change-part">-->
-
-<!--</div>-->
 </body>
 </html>
